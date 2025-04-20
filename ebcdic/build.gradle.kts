@@ -1,0 +1,72 @@
+import com.github.lppedd.kotlinx.charset.GenerateCharsetTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+
+plugins {
+  id("kotlinx-charset-kmp")
+  id("kotlinx-charset-maven")
+}
+
+val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
+  mappingsDir = layout.projectDirectory.dir("charsets")
+  expectDir = layout.buildDirectory.dir("generatedCharsetsExpect")
+  nonJvmDir = layout.buildDirectory.dir("generatedCharsetsNonJvm")
+  jvmDir = layout.buildDirectory.dir("generatedCharsetsJvm")
+  packageName = "com.github.lppedd.kotlinx.charset.ebcdic"
+
+  sbcs("IBM037") {
+    aliases = listOf("cp037", "ibm-037", "037")
+  }
+
+  sbcs("IBM1047") {
+    aliases = listOf("cp1047", "ibm-1047", "x-IBM1047", "1047")
+  }
+
+  ebcdicDbcs("x-IBM930", b2Min = 0x40, b2Max = 0xFE) {
+    aliases = listOf("cp930", "ibm930", "ibm-930", "930")
+    className = "IBM930"
+  }
+}
+
+tasks {
+  withType<KotlinCompilationTask<*>>().configureEach {
+    dependsOn(generateCharsets)
+  }
+
+  sourcesJar {
+    dependsOn(generateCharsets)
+  }
+}
+
+kotlin {
+  targets {
+    configureEach {
+      tasks.named(targetName + "SourcesJar").configure {
+        dependsOn(generateCharsets)
+      }
+    }
+  }
+
+  sourceSets {
+    commonMain {
+      kotlin {
+        srcDir(layout.buildDirectory.dir("generatedCharsetsExpect"))
+      }
+
+      dependencies {
+        api(projects.core)
+      }
+    }
+
+    jvmMain {
+      kotlin {
+        srcDir(layout.buildDirectory.dir("generatedCharsetsJvm"))
+      }
+    }
+
+    named("nonJvmMain").configure {
+      kotlin {
+        srcDir(layout.buildDirectory.dir("generatedCharsetsNonJvm"))
+      }
+    }
+  }
+}

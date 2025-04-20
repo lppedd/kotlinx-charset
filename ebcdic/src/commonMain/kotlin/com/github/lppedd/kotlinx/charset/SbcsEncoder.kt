@@ -1,0 +1,75 @@
+package com.github.lppedd.kotlinx.charset
+
+import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_ENCODING
+
+/**
+ * @author Edoardo Luppi
+ */
+internal class SbcsEncoder(
+  private val c2b: CharArray,
+  private val c2bIndex: CharArray,
+) : XCharsetEncoder {
+  private var replacement: Byte? = '?'.code.toByte()
+
+  override fun encode(value: String): ByteArray {
+    reset()
+
+    val sl = value.length // source length
+    val bytes = ByteArray(sl)
+    var sp = 0 // source position
+    var dp = 0 // destination position
+
+    while (sp < value.length) {
+      val ch = value[sp++]
+      val byte = encode(ch)
+
+      if (byte != UNMAPPABLE_ENCODING) {
+        bytes[dp++] = byte.code.toByte()
+        continue
+      }
+
+      val repl = replOrThrow("Char code ${ch.toHex()} is not mapped to a valid byte")
+
+      // Skip over if it is a surrogate pair
+      if (ch.isHighSurrogate() && sp < sl && value[sp].isLowSurrogate()) {
+        // Skip low surrogate
+        sp++
+      }
+
+      bytes[dp++] = repl
+    }
+
+    return if (dp == bytes.size) bytes else bytes.copyOf(dp)
+  }
+
+  override fun withReplacement(newReplacement: ByteArray?): XCharsetEncoder {
+    replacement = (if (newReplacement != null) newReplacement[0] else null)
+    return this
+  }
+
+  override fun reset() {
+    // There is no internal state to reset
+  }
+
+  private fun encode(ch: Char): Char {
+    val high = ch.code shr 8
+    val offset = c2bIndex[high]
+
+    if (offset == UNMAPPABLE_ENCODING) {
+      return UNMAPPABLE_ENCODING
+    }
+
+    val low = ch.code and 0xFF
+    return c2b[offset.code + low]
+  }
+
+  private fun replOrThrow(message: String): Byte {
+    val repl = replacement
+
+    if (repl != null) {
+      return repl
+    }
+
+    throw MessageCharacterCodingException(message)
+  }
+}

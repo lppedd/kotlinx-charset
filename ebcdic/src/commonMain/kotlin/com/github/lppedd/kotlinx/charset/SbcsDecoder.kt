@@ -15,7 +15,7 @@ internal class SbcsDecoder(private val b2c: CharArray) : XCharsetDecoder {
     val sb = StringBuilder(size)
 
     for (i in 0..<size) {
-      val b = bytes[i].toInt()
+      val b = bytes[i].toInt() and 0xFF /* to unsigned */
       val c = b2c[b]
 
       if (c == UNMAPPABLE_DECODING) {

@@ -38,5 +38,5 @@ jobs:
       - name: Grant execute permission to Gradle Wrapper
         run: chmod +x gradlew
       - name: Run build
-        run: ./gradlew build
+        run: ./gradlew clean build
         working-directory: ${{ github.workspace }}

@@ -32,13 +32,12 @@ public class XCharsetRegistrar {
   }
 
   private fun registerCharset(map: MutableMap<String, XCharset>, charset: XCharset) {
-    var key = charset.name.lowercase()
-    checkAvailability(map, key, "name")
-    map[key] = charset
+    val keys = LinkedHashSet<String>()
+    keys.add(charset.name.lowercase())
+    keys.addAll(charset.aliases.map(String::lowercase))
 
-    for (alias in charset.aliases) {
-      key = alias.lowercase()
-      checkAvailability(map, key, "alias")
+    for (key in keys) {
+      checkAvailability(map, key)
       map[key] = charset
     }
   }
@@ -46,9 +45,9 @@ public class XCharsetRegistrar {
   /**
    * Checks whether a charset is already mapped to [key].
    */
-  private fun checkAvailability(map: Map<String, XCharset>, key: String, type: String) {
+  private fun checkAvailability(map: Map<String, XCharset>, key: String) {
     if (map.containsKey(key)) {
-      throw IllegalArgumentException("A charset with $type '$key' is already registered")
+      throw IllegalArgumentException("A charset with name or alias '$key' is already registered")
     }
   }
 }

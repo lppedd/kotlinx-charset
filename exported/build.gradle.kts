@@ -37,17 +37,19 @@ kotlin {
 }
 
 npmPublish {
+  // https://github.com/mpetuska/npm-publish/issues/187
   if (OperatingSystem.current().isWindows) {
-    // https://github.com/mpetuska/npm-publish/issues/187
-    nodeHome = project.objects.directoryProperty().fileValue(File(System.getenv("NODE_HOME")))
-    nodeBin = nodeHome.file("node.exe")
-    npmBin = nodeHome.file("node_modules/npm/bin/npm-cli.js")
+    val nodePath = System.getenv("NODE_HOME")
+
+    if (nodePath != null) {
+      nodeHome = project.objects.directoryProperty().fileValue(File(nodePath))
+      nodeBin = nodeHome.file("node.exe")
+      npmBin = nodeHome.file("node_modules/npm/bin/npm-cli.js")
+    }
   }
 
   registries {
-    npmjs {
-      //
-    }
+    npmjs {}
   }
 
   packages {

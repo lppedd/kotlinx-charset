@@ -1,11 +1,11 @@
 # kotlinx-charset
 
-Charset support for Kotlin Multiplatform.
+Minimal charset support for Kotlin Multiplatform.
 
 ## core
 
-The `core` module provides the building blocks to implement new charsets,
-and to store them in a registry.
+The `core` module provides the foundational components for implementing
+and registering new charsets.
 
 ```kotlin
 // Create an empty charset registry
@@ -48,7 +48,7 @@ The `exported` module allows JS (and soon WebAssembly) consumers to decode bytes
 and encode strings, using top-level functions exported via ECMAScript modules.
 
 > [!TIP]
-> If you are consuming kotlinx-charset from a Kotlin project, avoid using this module
+> Avoid using this module when consuming `kotlinx-charset` from a Kotlin project
 
 You can depend on the [@lppedd/kotlinx-charset][1] npm package.  
 For example, consuming the library from TypeScript would look like:
@@ -61,5 +61,9 @@ function example(bytes: Uint8Array): Uint8Array {
   return encode("cp037", str);
 }
 ```
+
+Both the `decode` and `encode` functions will throw an `Error`
+if the specified charset does not exist or if an error occurs
+during data processing.
 
 [1]: https://www.npmjs.com/package/@lppedd/kotlinx-charset

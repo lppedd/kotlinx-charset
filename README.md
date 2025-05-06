@@ -56,9 +56,9 @@ For example, consuming the library from TypeScript would look like:
 ```ts
 import { decode, encode } from "@lppedd/kotlinx-charset";
 
-function example(toDecode: Uint8Array): void {
-  const str = decode(toDecode);
-  const bytes = encode(str);
+function example(bytes: Uint8Array): Uint8Array {
+  const str = decode("cp037", bytes);
+  return encode("cp037", str);
 }
 ```
 

@@ -50,6 +50,7 @@ and encode strings, using top-level functions exported via ECMAScript modules.
 > [!TIP]
 > If you are consuming kotlinx-charset from a Kotlin project, avoid using this module
 
+You can depend on the [@lppedd/kotlinx-charset][1] npm package.  
 For example, consuming the library from TypeScript would look like:
 
 ```ts
@@ -60,3 +61,5 @@ function example(toDecode: Uint8Array): void {
   const bytes = encode(str);
 }
 ```
+
+[1]: https://www.npmjs.com/package/@lppedd/kotlinx-charset

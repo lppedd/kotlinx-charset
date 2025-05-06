@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 plugins {
   id("org.jetbrains.kotlin.multiplatform")
   id("kotlinx-charset-maven")
@@ -35,12 +37,16 @@ kotlin {
 }
 
 npmPublish {
-  dry = true
+  if (OperatingSystem.current().isWindows) {
+    // https://github.com/mpetuska/npm-publish/issues/187
+    nodeHome = project.objects.directoryProperty().fileValue(File(System.getenv("NODE_HOME")))
+    nodeBin = nodeHome.file("node.exe")
+    npmBin = nodeHome.file("node_modules/npm/bin/npm-cli.js")
+  }
 
   registries {
-    register("npmjs") {
-      uri = uri("https://registry.npmjs.org")
-      authToken = "obfuscated"
+    npmjs {
+      //
     }
   }
 

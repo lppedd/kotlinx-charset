@@ -32,7 +32,7 @@ public class XCharsetRegistrar {
   }
 
   private fun registerCharset(map: MutableMap<String, XCharset>, charset: XCharset) {
-    val keys = LinkedHashSet<String>()
+    val keys = HashSet<String>()
     keys.add(charset.name.lowercase())
     keys.addAll(charset.aliases.map(String::lowercase))
 

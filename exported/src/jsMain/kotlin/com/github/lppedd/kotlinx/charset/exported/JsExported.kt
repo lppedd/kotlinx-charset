@@ -1,7 +1,6 @@
 package com.github.lppedd.kotlinx.charset.exported
 
 import com.github.lppedd.kotlinx.charset.XCharsetRegistrar
-import org.khronos.webgl.Int8Array
 import org.khronos.webgl.Uint8Array
 import com.github.lppedd.kotlinx.charset.ebcdic.provideCharsets as provideEbcdicCharsets
 
@@ -9,6 +8,12 @@ import com.github.lppedd.kotlinx.charset.ebcdic.provideCharsets as provideEbcdic
 @OptIn(ExperimentalStdlibApi::class)
 @EagerInitialization
 private val registrar = initCharsetRegistrar()
+
+@JsExport
+public fun getCharset(charsetName: String): XCharset {
+  val delegate = registrar.getCharset(charsetName)
+  return DelegatingCharset(delegate)
+}
 
 @JsExport
 public fun decode(charsetName: String, bytes: Uint8Array): String {
@@ -30,14 +35,4 @@ private fun initCharsetRegistrar(): XCharsetRegistrar {
   val registrar = XCharsetRegistrar()
   provideEbcdicCharsets(registrar)
   return registrar
-}
-
-private fun Uint8Array.toByteArray(): ByteArray {
-  val i8a = Int8Array(this.buffer, this.byteOffset, this.length)
-  return i8a.unsafeCast<ByteArray>()
-}
-
-public fun ByteArray.toUint8Array(): Uint8Array {
-  val i8a = this.unsafeCast<Int8Array>()
-  return Uint8Array(i8a.buffer, i8a.byteOffset, i8a.length)
 }

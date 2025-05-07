@@ -39,8 +39,8 @@ internal object Sbcs {
     // c -> b .nr entries
     i = 0
     while (i < c2bNR.size) {
-      val c = c2bNR[i++]
       val b = c2bNR[i++]
+      val c = c2bNR[i++]
 
       val charCode = c.code
       val high = charCode shr 8

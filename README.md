@@ -66,11 +66,23 @@ You can depend on the [@lppedd/kotlinx-charset][1] npm package.
 For example, consuming the library from TypeScript would look like:
 
 ```ts
-import { decode, encode } from "@lppedd/kotlinx-charset";
+import { decode, encode, getCharset } from "@lppedd/kotlinx-charset";
 
-function example(bytes: Uint8Array): Uint8Array {
-  const str = decode("cp037", bytes);
-  return encode("cp037", str);
+function funsExample(bytes: Uint8Array): Uint8Array {
+  const str = decode("ibm037", bytes);
+  return encode("ibm037", str);
+}
+
+// Alternatively, you can interact with a charset instance directly.
+// This allows setting or removing (by passing null) the replacement character.
+function instanceExample(bytes: Uint8Array): Uint8Array {
+  const charset = getCharset("ibm037");
+
+  const decoder = charset.newDecoder();
+  const str = decoder.decode(bytes);
+
+  const encoder = charset.newEncoder();
+  return encoder.encode(str);
 }
 ```
 

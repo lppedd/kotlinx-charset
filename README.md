@@ -1,6 +1,18 @@
 # kotlinx-charset
 
+![Build status](https://github.com/lppedd/kotlinx-charset/workflows/Build/badge.svg)
+![MIT license](https://img.shields.io/github/license/lppedd/kotlinx-charset)
+![Kotlin 2.1.20](https://img.shields.io/badge/kotlin-2.1.20-blue.svg?logo=kotlin)
+
 Minimal charset support for Kotlin Multiplatform.
+
+### Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md).
+
+### Supported Kotlin platforms
+
+All Kotlin platforms are supported, except for Android.
 
 ## core
 

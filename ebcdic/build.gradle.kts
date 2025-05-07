@@ -25,6 +25,11 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
     aliases = listOf("cp930", "ibm930", "ibm-930", "930")
     className = "IBM930"
   }
+
+  ebcdicDbcs("x-IBM939", b2Min = 0x40, b2Max = 0xFE) {
+    aliases = listOf("cp939", "ibm939", "ibm-939", "939")
+    className = "IBM939"
+  }
 }
 
 tasks {

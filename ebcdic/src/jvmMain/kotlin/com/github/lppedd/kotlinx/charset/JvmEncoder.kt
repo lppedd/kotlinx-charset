@@ -19,7 +19,7 @@ internal class JvmEncoder(private val nativeEncoder: java.nio.charset.CharsetEnc
     return byteArray
   }
 
-  override fun withReplacement(newReplacement: ByteArray?): XCharsetEncoder {
+  override fun setReplacement(newReplacement: ByteArray?) {
     if (newReplacement != null) {
       nativeEncoder.replaceWith(newReplacement)
       nativeEncoder.onMalformedInput(CodingErrorAction.REPLACE)
@@ -28,8 +28,6 @@ internal class JvmEncoder(private val nativeEncoder: java.nio.charset.CharsetEnc
       nativeEncoder.onMalformedInput(CodingErrorAction.REPORT)
       nativeEncoder.onUnmappableCharacter(CodingErrorAction.REPORT)
     }
-
-    return this
   }
 
   override fun reset() {

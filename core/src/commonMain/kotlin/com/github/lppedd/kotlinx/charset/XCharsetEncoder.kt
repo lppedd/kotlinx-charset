@@ -21,7 +21,7 @@ public interface XCharsetEncoder {
    *
    * If set to `null`, an encoding error will throw a [CharacterCodingException].
    */
-  public fun withReplacement(newReplacement: ByteArray?): XCharsetEncoder
+  public fun setReplacement(newReplacement: ByteArray?)
 
   /**
    * Resets the internal state of the encoder.

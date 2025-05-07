@@ -21,7 +21,7 @@ public interface XCharsetDecoder {
    *
    * If set to `null`, a decoding error will throw a [CharacterCodingException].
    */
-  public fun withReplacement(newReplacement: String?): XCharsetDecoder
+  public fun setReplacement(newReplacement: String?)
 
   /**
    * Resets the internal state of the decoder.

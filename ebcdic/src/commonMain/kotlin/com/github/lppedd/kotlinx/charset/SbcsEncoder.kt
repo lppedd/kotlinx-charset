@@ -42,9 +42,8 @@ internal class SbcsEncoder(
     return if (dp == bytes.size) bytes else bytes.copyOf(dp)
   }
 
-  override fun withReplacement(newReplacement: ByteArray?): XCharsetEncoder {
+  override fun setReplacement(newReplacement: ByteArray?) {
     replacement = (if (newReplacement != null) newReplacement[0] else null)
-    return this
   }
 
   override fun reset() {

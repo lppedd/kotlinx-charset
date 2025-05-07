@@ -17,7 +17,7 @@ internal class JvmDecoder(private val nativeDecoder: java.nio.charset.CharsetDec
     return charBuffer.toString()
   }
 
-  override fun withReplacement(newReplacement: String?): XCharsetDecoder {
+  override fun setReplacement(newReplacement: String?) {
     if (newReplacement != null) {
       nativeDecoder.replaceWith(newReplacement)
       nativeDecoder.onMalformedInput(CodingErrorAction.REPLACE)
@@ -26,8 +26,6 @@ internal class JvmDecoder(private val nativeDecoder: java.nio.charset.CharsetDec
       nativeDecoder.onMalformedInput(CodingErrorAction.REPORT)
       nativeDecoder.onUnmappableCharacter(CodingErrorAction.REPORT)
     }
-
-    return this
   }
 
   override fun reset() {

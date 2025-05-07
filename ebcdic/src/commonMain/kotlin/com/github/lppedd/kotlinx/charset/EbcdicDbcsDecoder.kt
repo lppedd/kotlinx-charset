@@ -96,9 +96,8 @@ internal class EbcdicDbcsDecoder(
     return sb.toString()
   }
 
-  override fun withReplacement(newReplacement: String?): XCharsetDecoder {
+  override fun setReplacement(newReplacement: String?) {
     replacement = (if (!newReplacement.isNullOrEmpty()) newReplacement[0] else null)
-    return this
   }
 
   override fun reset() {

@@ -85,9 +85,8 @@ internal class EbcdicDbcsEncoder(
     return dst.copyOf(dp)
   }
 
-  override fun withReplacement(newReplacement: ByteArray?): XCharsetEncoder {
+  override fun setReplacement(newReplacement: ByteArray?) {
     replacement = newReplacement
-    return this
   }
 
   override fun reset() {

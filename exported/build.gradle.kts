@@ -57,7 +57,36 @@ npmPublish {
     named("js") {
       scope = "lppedd"
       packageName = "kotlinx-charset"
-      readme = project.layout.projectDirectory.file("../README.md")
+      readme = rootProject.layout.projectDirectory.file("README.md")
+
+      // Improve published package discoverability
+      packageJson {
+        description = "Minimal support for charset encoding and decoding"
+        license = "MIT"
+        keywords = setOf(
+          "ebcdic",
+          "charset",
+          "encoder",
+          "decoder",
+          "support",
+          "kotlin",
+          "multiplatform",
+        )
+
+        repository {
+          type = "git"
+          url = "https://github.com/lppedd/kotlinx-charset.git"
+        }
+
+        bugs {
+          url = "https://github.com/lppedd/kotlinx-charset/issues"
+        }
+      }
+
+      files {
+        // Include the license file in the published package
+        from(rootProject.layout.projectDirectory.file("LICENSE"))
+      }
     }
   }
 }

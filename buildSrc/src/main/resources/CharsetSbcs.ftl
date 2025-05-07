@@ -46,7 +46,8 @@ internal actual object ${className} : com.github.lppedd.kotlinx.charset.XCharset
     val c2bNR = CharArray(${charset.c2bNR?size * 2})
     <#list charset.c2bNR>
     <#items as entry>
-    c2bNR[${entry?index}] = ${toHex(entry.bs, 2)}.toChar(); c2bNR[${entry?index + 1}] = '${toUnicode(entry.cp)}'
+    <#assign i = entry?index * 2>
+    c2bNR[${i}] = ${toHex(entry.bs, 2)}.toChar(); c2bNR[${i + 1}] = '${toUnicode(entry.cp)}'
     </#items>
     </#list>
 

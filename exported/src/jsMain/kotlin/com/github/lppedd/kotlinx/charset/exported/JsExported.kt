@@ -5,6 +5,9 @@ import org.khronos.webgl.Int8Array
 import org.khronos.webgl.Uint8Array
 import com.github.lppedd.kotlinx.charset.ebcdic.provideCharsets as provideEbcdicCharsets
 
+@Suppress("DEPRECATION")
+@OptIn(ExperimentalStdlibApi::class)
+@EagerInitialization
 private val registrar = initCharsetRegistrar()
 
 @JsExport

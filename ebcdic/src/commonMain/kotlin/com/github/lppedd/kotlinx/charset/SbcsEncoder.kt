@@ -43,7 +43,15 @@ internal class SbcsEncoder(
   }
 
   override fun setReplacement(newReplacement: ByteArray?) {
-    replacement = (if (newReplacement != null) newReplacement[0] else null)
+    if (newReplacement != null) {
+      require(newReplacement.size == 1) {
+        "The replacement sequence must be 1 byte long"
+      }
+
+      replacement = newReplacement[0]
+    } else {
+      replacement = null
+    }
   }
 
   override fun reset() {

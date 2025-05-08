@@ -90,6 +90,13 @@ internal class EbcdicDbcsEncoder(
   }
 
   override fun setReplacement(newReplacement: ByteArray?) {
+    if (newReplacement != null) {
+      val size = newReplacement.size
+      require(size == 1 || size == 2) {
+        "The replacement sequence must be 1 or 2 bytes long"
+      }
+    }
+
     replacement = newReplacement
   }
 

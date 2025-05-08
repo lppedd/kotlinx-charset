@@ -97,7 +97,15 @@ internal class EbcdicDbcsDecoder(
   }
 
   override fun setReplacement(newReplacement: String?) {
-    replacement = (if (!newReplacement.isNullOrEmpty()) newReplacement[0] else null)
+    if (newReplacement != null) {
+      require(newReplacement.length == 1) {
+        "The replacement sequence must be 1 character long"
+      }
+
+      replacement = newReplacement[0]
+    } else {
+      replacement = null
+    }
   }
 
   override fun reset() {

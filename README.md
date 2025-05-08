@@ -39,7 +39,8 @@ The `ebcdic` module adds support for:
 ```text
 IBM037  IBM939
 IBM273  IBM1047
-IBM930  IBM1141
+IBM297  IBM1141
+IBM930
 ```
 
 You can register supported EBCDIC charsets to your `XCharsetRegistrar`

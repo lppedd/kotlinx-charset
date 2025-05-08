@@ -33,10 +33,16 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
     aliases = listOf("cp297", "ibm297", "ibm-297", "297", "ebcdic-cp-fr", "cpibm297", "csIBM297")
   }
 
-  // Latin 1 Austria/Germany with Euro sign (like IBM273, but u00A4 -> u20AC)
+  // Latin 1 Austria/Germany with Euro sign (like IBM273, but 0x9F = u00A4 -> u20AC)
   sbcs("IBM01141") {
     aliases = listOf("cp1141", "ccsid01141", "1141", "ebcdic-de-273+euro", "ibm1141", "ibm-1141")
     className = "IBM1141"
+  }
+
+  // Latin 1 France with Euro sign (like IBM297, but 0x9F = u00A4 -> u20AC)
+  sbcs("IBM01147") {
+    aliases = listOf("cp1147", "ccsid01147", "cp01147", "1147", "ebcdic-fr-277+euro", "ibm1147", "ibm-1147")
+    className = "IBM1147"
   }
 
   // Japanese - halfwidth Katakana, fullwidth Katakana, Hiragana and Kanji

@@ -40,7 +40,7 @@ The `ebcdic` module adds support for:
 IBM037  IBM939
 IBM273  IBM1047
 IBM297  IBM1141
-IBM930
+IBM930  IBM1147
 ```
 
 You can register supported EBCDIC charsets to your `XCharsetRegistrar`

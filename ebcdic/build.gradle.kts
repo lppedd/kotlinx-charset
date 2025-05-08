@@ -13,7 +13,7 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
   jvmDir = layout.buildDirectory.dir("generatedCharsetsJvm")
   packageName = "com.github.lppedd.kotlinx.charset.ebcdic"
 
-  // US/Canada
+  // Latin 1 US/Canada
   sbcs("IBM037") {
     aliases = listOf("cp037", "ibm-037", "037")
   }
@@ -23,12 +23,12 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
     aliases = listOf("cp1047", "ibm-1047", "x-IBM1047", "1047")
   }
 
-  // Austria/Germany
+  // Latin 1 Austria/Germany
   sbcs("IBM273") {
     aliases = listOf("cp273", "ibm273", "ibm-273", "273")
   }
 
-  // Austria/Germany with Euro sign (like IBM273, but u00A4 -> u20AC)
+  // Latin 1 Austria/Germany with Euro sign (like IBM273, but u00A4 -> u20AC)
   sbcs("IBM01141") {
     aliases = listOf("cp1141", "ccsid01141", "1141", "ebcdic-de-273+euro", "ibm1141", "ibm-1141")
     className = "IBM1141"

@@ -13,6 +13,7 @@ plugins {
 
 rootProject.name = "kotlinx-charset"
 
+include(":ucm")
 include(":core")
 include(":ebcdic")
 include(":exported")

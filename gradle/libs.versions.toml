@@ -1,15 +1,18 @@
 [versions]
 kotlin = "2.1.20"
 freemarker = "2.3.34"
+antlrKotlin = "1.0.2"
 mavenPublish = "0.31.0"
 npmPublish = "4.0.2"
 
 [libraries]
 freemarker = { module = "org.freemarker:freemarker", version.ref = "freemarker" }
+antlrKotlin = { module = "com.strumenta:antlr-kotlin-runtime", version.ref = "antlrKotlin" }
 
 # Gradle plugins
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 mavenPublish = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "mavenPublish" }
 
 [plugins]
+antlrKotlin = { id = "com.strumenta.antlr-kotlin", version.ref = "antlrKotlin" }
 npmPublish = { id = "org.danilopianini.npm.publish", version.ref = "npmPublish" }

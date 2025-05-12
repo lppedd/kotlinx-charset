@@ -1,27 +1,22 @@
 package com.github.lppedd.kotlinx.charset.ucm
 
 /**
+ * @property codeSetName The name of the charset
+ * @property codeSetType The type of the charset
+ * @property minBpc The minimum number of bytes per character
+ * @property maxBpc The maximum number of bytes per character
+ * @property subchar The substitution character byte sequence for this codepage
+ * @property subchar1 The single byte substitution character
+ * @property mappings The charset mapping table
+ *
  * @author Edoardo Luppi
  */
-public interface UcmData {
-  /** The name of the charset. */
-  public val codeSetName: String
-
-  /** The type of the charset. */
-  public val codeSetType: UcmCodeSetType
-
-  /** The minimum number of bytes per character. */
-  public val minBpc: Int
-
-  /** The maximum number of bytes per character. */
-  public val maxBpc: Int
-
-  /** The substitution character byte sequence for this codepage. */
-  public val subchar: CharArray?
-
-  /** The single byte substitution character. */
-  public val subchar1: Char?
-
-  /** The charset mapping table. */
-  public val mappings: List<UcmMapping>
-}
+public class UcmData(
+  public val codeSetName: String,
+  public val codeSetType: UcmCodeSetType,
+  public val minBpc: Int,
+  public val maxBpc: Int,
+  public val subchar: CharArray?,
+  public val subchar1: Char?,
+  public val mappings: List<UcmMapping>,
+)

@@ -8,7 +8,7 @@ plugins {
 
 val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
   mappingsDir = layout.projectDirectory.dir("charsets")
-  expectDir = layout.buildDirectory.dir("generatedCharsetsExpect")
+  commonDir = layout.buildDirectory.dir("generatedCharsetsCommon")
   nonJvmDir = layout.buildDirectory.dir("generatedCharsetsNonJvm")
   jvmDir = layout.buildDirectory.dir("generatedCharsetsJvm")
   packageName = "com.github.lppedd.kotlinx.charset.ebcdic"
@@ -106,7 +106,7 @@ kotlin {
   sourceSets {
     commonMain {
       kotlin {
-        srcDir(layout.buildDirectory.dir("generatedCharsetsExpect"))
+        srcDir(layout.buildDirectory.dir("generatedCharsetsCommon"))
       }
 
       dependencies {

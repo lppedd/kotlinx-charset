@@ -82,6 +82,15 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
     // JDKs do not seem to offer built-in support for IBM1390
     common = true
   }
+
+  // Japanese, similar to IBM1390
+  extendedEbcdicDbcs("x-IBM1399", b2Min = 0x40, b2Max = 0xFE) {
+    aliases = listOf("cp1399", "ibm1399", "ibm-1399", "1399")
+    className = "IBM1399"
+
+    // JDKs do not seem to offer built-in support for IBM1390
+    common = true
+  }
 }
 
 tasks {

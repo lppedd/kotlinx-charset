@@ -43,7 +43,7 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.github.lp
   init {
     // b2c entries are sorted by byte sequence to work with binary search
     b2cComposites = arrayOf(
-      <#list charset.composites as entry>
+      <#list charset.b2cComposites as entry>
       com.github.lppedd.kotlinx.charset.Entry(${toHex(entry.bs, -1)}, '${toUnicode(entry.cp)}', '${toUnicode(entry.cp2)}'),
       </#list>
     )

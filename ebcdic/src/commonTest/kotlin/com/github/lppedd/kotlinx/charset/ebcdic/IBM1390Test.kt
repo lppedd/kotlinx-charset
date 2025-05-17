@@ -1,8 +1,9 @@
 package com.github.lppedd.kotlinx.charset.ebcdic
 
 import com.github.lppedd.kotlinx.charset.Ebcdic.SO
-import com.github.lppedd.kotlinx.charset.decodeToCharArray
+import com.github.lppedd.kotlinx.charset.decodeToHexString
 import com.github.lppedd.kotlinx.charset.encodeToHexString
+import com.github.lppedd.kotlinx.charset.toHexString
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -11,15 +12,15 @@ class IBM1390Test {
   @Test
   fun decodeSingleBytes() {
     val bytes = byteArrayOf(0x2B.toByte(), 0xF4.toByte(), 0x41.toByte())
-    val chars = IBM1390.decodeToCharArray(bytes)
-    assertEquals("\u008B\u0034\uFF61", chars.concatToString())
+    val hex = IBM1390.decodeToHexString(bytes)
+    assertEquals("\u008B\u0034\uFF61".toHexString(), hex)
   }
 
   @Test
   fun decodeDoubleBytes() {
     val bytes = byteArrayOf(SO.toByte(), 0xBA.toByte(), 0x60.toByte(), 0xCC.toByte(), 0x47.toByte())
-    val chars = IBM1390.decodeToCharArray(bytes)
-    assertEquals("\u5427\u86B1", chars.concatToString())
+    val hex = IBM1390.decodeToHexString(bytes)
+    assertEquals("\u5427\u86B1".toHexString(), hex)
   }
 
   @Test
@@ -32,8 +33,8 @@ class IBM1390Test {
       0xC9.toByte(),
     )
 
-    val chars = IBM1390.decodeToCharArray(bytes)
-    assertEquals("\u0254\u0300\u0259\u0301", chars.concatToString())
+    val hex = IBM1390.decodeToHexString(bytes)
+    assertEquals("\u0254\u0300\u0259\u0301".toHexString(), hex)
   }
 
   @Test
@@ -50,8 +51,8 @@ class IBM1390Test {
       0xB5.toByte(),
     )
 
-    val chars = IBM1390.decodeToCharArray(bytes)
-    assertEquals("\u008B\u0034\u68DF\uD84D\uDC4B\u304B\u309A", chars.concatToString())
+    val hex = IBM1390.decodeToHexString(bytes)
+    assertEquals("\u008B\u0034\u68DF\uD84D\uDC4B\u304B\u309A".toHexString(), hex)
   }
 
   @Test
@@ -66,14 +67,14 @@ class IBM1390Test {
       0x42.toByte(),
     )
 
-    val chars = IBM1390.decodeToCharArray(bytes)
+    val hex = IBM1390.decodeToHexString(bytes)
 
     // Assert the unmapped bytes are decoded by replacement chars
-    assertEquals("\u000C\uFFFD\u86B3\uFFFD", chars.concatToString())
+    assertEquals("\u000C\uFFFD\u86B3\uFFFD".toHexString(), hex)
 
     // Assert it throws when no replacement char is defined
     assertFailsWith(CharacterCodingException::class) {
-      IBM1390.decodeToCharArray(bytes, null)
+      IBM1390.decodeToHexString(bytes, null)
     }
   }
 

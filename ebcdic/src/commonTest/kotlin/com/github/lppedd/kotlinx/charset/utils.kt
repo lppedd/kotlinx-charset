@@ -1,6 +1,15 @@
 package com.github.lppedd.kotlinx.charset
 
 @OptIn(ExperimentalStdlibApi::class)
+private val decodeFormat = HexFormat {
+  upperCase = true
+  number {
+    removeLeadingZeros = true
+    minLength = 4
+  }
+}
+
+@OptIn(ExperimentalStdlibApi::class)
 private val encodeFormat = HexFormat {
   upperCase = true
   bytes {
@@ -8,7 +17,15 @@ private val encodeFormat = HexFormat {
   }
 }
 
-internal fun XCharset.decodeToCharArray(bytes: ByteArray, replacement: String? = ""): CharArray {
+@OptIn(ExperimentalStdlibApi::class)
+internal fun String.toHexString(): String {
+  val chars = this.toCharArray()
+  return chars.joinToString(separator = ",") {
+    it.code.toHexString(decodeFormat)
+  }
+}
+
+internal fun XCharset.decodeToHexString(bytes: ByteArray, replacement: String? = ""): String {
   val decoder = this.newDecoder()
 
   if (replacement == null || replacement.isNotEmpty()) {
@@ -16,7 +33,7 @@ internal fun XCharset.decodeToCharArray(bytes: ByteArray, replacement: String? =
   }
 
   val str = decoder.decode(bytes)
-  return str.toCharArray()
+  return str.toHexString()
 }
 
 @OptIn(ExperimentalStdlibApi::class)

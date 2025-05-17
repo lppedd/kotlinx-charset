@@ -123,6 +123,12 @@ kotlin {
       }
     }
 
+    commonTest {
+      dependencies {
+        implementation(libs.kotlinxIO)
+      }
+    }
+
     jvmMain {
       kotlin {
         srcDir(layout.buildDirectory.dir("generatedCharsetsJvm"))

@@ -17,13 +17,16 @@ private val encodeFormat = HexFormat {
   }
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 internal fun String.toHexString(): String {
   val chars = this.toCharArray()
-  return chars.joinToString(separator = ",") {
+  return chars.toHexString()
+}
+
+@OptIn(ExperimentalStdlibApi::class)
+internal fun CharArray.toHexString(): String =
+  this.joinToString(separator = ",") {
     it.code.toHexString(decodeFormat)
   }
-}
 
 internal fun XCharset.decodeToHexString(bytes: ByteArray, replacement: String? = ""): String {
   val decoder = this.newDecoder()

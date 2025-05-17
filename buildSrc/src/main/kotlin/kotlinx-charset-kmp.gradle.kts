@@ -29,6 +29,15 @@ kotlin {
 
   js {
     nodejs()
+    compilerOptions {
+      target = "es2015"
+      freeCompilerArgs.addAll(
+        "-Xes-arrow-functions", // K/JS bug: requires explicit activation in 2.2.0
+        "-Xir-generate-inline-anonymous-functions",
+        "-Xir-property-lazy-initialization=false",
+        "-Xgenerate-polyfills=false",
+      )
+    }
   }
 
   wasmJs {

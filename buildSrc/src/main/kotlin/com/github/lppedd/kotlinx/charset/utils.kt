@@ -11,3 +11,8 @@ internal fun Int.toHex(length: Int = 4): String =
 
 internal fun Int.toUnicodeChar(): String =
   String.format("\\u%04X", this)
+
+internal fun IntArray.toUnicodeChars(): String =
+  this.joinToString(separator = "+", prefix = "u") {
+    String.format("\\u%04X", it)
+  }

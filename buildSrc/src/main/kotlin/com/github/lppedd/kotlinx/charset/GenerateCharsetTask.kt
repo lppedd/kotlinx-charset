@@ -363,6 +363,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
     val className = options.className.getOrElse(charsetName)
     data["packageName"] = packageName
     data["className"] = className
+    data["isCommon"] = options.common.get()
 
     // Charset information
     val aliases = options.aliases.getOrElse(emptyList())
@@ -459,6 +460,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
     val className = options.className.getOrElse(charsetName)
     data["packageName"] = packageName
     data["className"] = className
+    data["isCommon"] = options.common.get()
 
     // Charset information
     val aliases = options.aliases.getOrElse(emptyList())

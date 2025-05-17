@@ -1,23 +1,24 @@
 <#-- @ftlvariable name="packageName" type="java.lang.String" -->
 <#-- @ftlvariable name="className" type="java.lang.String" -->
+<#-- @ftlvariable name="isCommon" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="charset" type="com.github.lppedd.kotlinx.charset.GenerateCharsetTask.SbcsCharset" -->
 package ${packageName}
 
-internal actual object ${className} : com.github.lppedd.kotlinx.charset.XCharset {
+internal <#if isCommon == false>actual </#if>object ${className} : com.github.lppedd.kotlinx.charset.XCharset {
   private val b2c: CharArray
   private val c2b: CharArray
   private val c2bIndex: CharArray
 
-  actual override val name: String =
+  <#if isCommon == false>actual </#if>override val name: String =
     "${charset.name}"
 
-  actual override val aliases: Array<String>
+  <#if isCommon == false>actual </#if>override val aliases: Array<String>
      get() = arrayOf(<#list charset.aliases as alias>"${alias}"<#sep>, </#list>)
 
-  actual override fun newDecoder(): com.github.lppedd.kotlinx.charset.XCharsetDecoder =
+  <#if isCommon == false>actual </#if>override fun newDecoder(): com.github.lppedd.kotlinx.charset.XCharsetDecoder =
     com.github.lppedd.kotlinx.charset.SbcsDecoder(b2c)
 
-  actual override fun newEncoder(): com.github.lppedd.kotlinx.charset.XCharsetEncoder =
+  <#if isCommon == false>actual </#if>override fun newEncoder(): com.github.lppedd.kotlinx.charset.XCharsetEncoder =
     com.github.lppedd.kotlinx.charset.SbcsEncoder(c2b, c2bIndex)
 
   init {

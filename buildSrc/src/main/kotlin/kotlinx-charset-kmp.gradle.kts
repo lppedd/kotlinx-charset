@@ -29,8 +29,9 @@ kotlin {
 
   js {
     nodejs()
+    useCommonJs()
     compilerOptions {
-      target = "es2015"
+      useEsClasses = true
       freeCompilerArgs.addAll(
         "-Xes-arrow-functions", // K/JS bug: requires explicit activation in 2.2.0
         "-Xir-generate-inline-anonymous-functions",

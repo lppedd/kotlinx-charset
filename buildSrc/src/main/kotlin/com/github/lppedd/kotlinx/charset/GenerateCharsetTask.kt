@@ -122,7 +122,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
     val c2bSize: Int,
     val b2cNR: IntArray,
     val c2bNR: IntArray,
-    val composites: List<CompositeCharsEntry>,
+    val b2cComposites: List<CompositeCharsEntry>,
   )
 
   internal class B2CRow(
@@ -581,7 +581,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
 
     // Charset information
     val aliases = options.aliases.getOrElse(emptyList())
-    val composites = mapEntries
+    val b2cComposites = mapEntries
       .filter { it.cs.size > 1 }
       .sortedBy { it.bs }
       .map {
@@ -602,7 +602,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
       c2bSize = c2bSize,
       b2cNR = b2cNR,
       c2bNR = cb2NR,
-      composites = composites,
+      b2cComposites = b2cComposites,
     )
 
     val file = baseDir.resolve("$className.kt")

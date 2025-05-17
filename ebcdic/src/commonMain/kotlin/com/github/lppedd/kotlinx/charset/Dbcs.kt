@@ -55,27 +55,25 @@ internal object Dbcs {
 
     // If present, process the single byte table.
     // Here we map a Unicode character to its single byte value.
-    if (b2cSBCA.isNotEmpty()) {
-      for (b in b2cSBCA.indices) {
-        val c = b2cSBCA[b].code
+    for (b in b2cSBCA.indices) {
+      val c = b2cSBCA[b].code
 
-        if (c == UNMAPPABLE_DECODING.code) {
-          continue
-        }
-
-        var index = c2bIndex[c shr 8].code
-
-        if (index == 0) {
-          index = offset
-          offset += 256
-          c2bIndex[c shr 8] = index.toChar()
-        }
-
-        // index + (c and 0xFF) means:
-        //   index is the base offset in the flattened c2b array (the row index)
-        //   c and 0xFF is the low byte of the character (the column index in the flattened c2b row)
-        c2b[index + (c and 0xFF)] = b.toChar()
+      if (c == UNMAPPABLE_DECODING.code) {
+        continue
       }
+
+      var index = c2bIndex[c shr 8].code
+
+      if (index == 0) {
+        index = offset
+        offset += 256
+        c2bIndex[c shr 8] = index.toChar()
+      }
+
+      // index + (c and 0xFF) means:
+      //   index is the base offset in the flattened c2b array (the row index)
+      //   c and 0xFF is the low byte of the character (the column index in the flattened c2b row)
+      c2b[index + (c and 0xFF)] = b.toChar()
     }
 
     // Process the double byte table.

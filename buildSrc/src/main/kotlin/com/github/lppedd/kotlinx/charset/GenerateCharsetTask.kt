@@ -156,10 +156,10 @@ abstract class GenerateCharsetTask : DefaultTask() {
   abstract val mappingsDir: DirectoryProperty
 
   /**
-   * The directory where to output  generated `expect` charsets.
+   * The directory where to output generated charsets for all platforms.
    */
   @get:OutputDirectory
-  abstract val expectDir: DirectoryProperty
+  abstract val commonDir: DirectoryProperty
 
   /**
    * The directory where to output generated charsets for all non-JVM platforms.
@@ -223,7 +223,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
   @TaskAction
   protected fun execute() {
     val mappingsDir = mappingsDir.get().asFile
-    val expectDir = expectDir.get().asFile
+    val commonDir = commonDir.get().asFile
     val nonJvmDir = nonJvmDir.get().asFile
     val jvmDir = jvmDir.get().asFile
     val charsets = extendedEbcdicDbcs.asSequence() + ebcdicDbcs.asSequence() + sbcs.asSequence()
@@ -234,10 +234,10 @@ abstract class GenerateCharsetTask : DefaultTask() {
     for (options in charsets) {
       val outDir = if (options.common.get()) {
         // Output the generated declaration in the common source set
-        expectDir
+        commonDir
       } else {
-        // Generate the expect declaration
-        generateExpectCharset(expectDir, options)
+        // Generate the expect declaration in the common source set
+        generateExpectCharset(commonDir, options)
 
         // Generate the JVM-specific declaration
         generateJvmCharset(jvmDir, options)
@@ -256,7 +256,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
       classNames += "$packageName.$className"
     }
 
-    generateCharsetRegistrar(expectDir, packageName, classNames)
+    generateCharsetRegistrar(commonDir, packageName, classNames)
   }
 
   private fun generateCharsetRegistrar(baseDir: File, packageName: String, classNames: List<String>) {

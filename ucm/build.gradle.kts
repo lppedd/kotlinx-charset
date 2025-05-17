@@ -17,12 +17,6 @@ kotlin {
         implementation(libs.antlrKotlin)
       }
     }
-
-    commonTest {
-      dependencies {
-        implementation(kotlin("test"))
-      }
-    }
   }
 }
 

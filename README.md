@@ -37,8 +37,8 @@ val encoder = charset.newEncoder()
 The `ebcdic` module adds support for:
 
 ```text
-IBM037  IBM939
-IBM273  IBM1047
+IBM037  IBM939   IBM1390
+IBM273  IBM1047  IBM1399
 IBM297  IBM1141
 IBM930  IBM1147
 ```

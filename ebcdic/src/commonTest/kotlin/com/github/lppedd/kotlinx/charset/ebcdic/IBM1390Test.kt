@@ -10,9 +10,9 @@ import kotlin.test.assertFailsWith
 class IBM1390Test {
   @Test
   fun decodeSingleBytes() {
-    val bytes = byteArrayOf(0x2B.toByte(), 0xF4.toByte())
+    val bytes = byteArrayOf(0x2B.toByte(), 0xF4.toByte(), 0x41.toByte())
     val chars = IBM1390.decodeToCharArray(bytes)
-    assertEquals("\u008B\u0034", chars.concatToString())
+    assertEquals("\u008B\u0034\uFF61", chars.concatToString())
   }
 
   @Test
@@ -58,18 +58,18 @@ class IBM1390Test {
   fun decodeUnmapped() {
     val bytes = byteArrayOf(
       0x0C.toByte(),
-      0x0E.toByte(),  // 0x0E is unmapped
       SO.toByte(),    // Start of double bytes mode
       0xFA.toByte(),  // 0xFAFD is unmapped
       0xFD.toByte(),
       0xCC.toByte(),
-      0x48.toByte()
+      0x48.toByte(),
+      0x42.toByte(),
     )
 
     val chars = IBM1390.decodeToCharArray(bytes)
 
     // Assert the unmapped bytes are decoded by replacement chars
-    assertEquals("\u000C\uFFFD\uFFFD\u86B3", chars.concatToString())
+    assertEquals("\u000C\uFFFD\u86B3\uFFFD", chars.concatToString())
 
     // Assert it throws when no replacement char is defined
     assertFailsWith(CharacterCodingException::class) {

@@ -44,8 +44,9 @@ internal class UcmParserVisitorImpl : UcmParserBaseVisitor<Any>() {
     checkUcm(minBpc > 0, "The min number of bytes per character must be at least 1, but is $minBpc")
     checkUcm(maxBpc > 0, "The max number of bytes per character must be at least 1, but is $maxBpc")
 
-    val mappings = ctx.mapping().map(::visitMapping)
+    val mappings = ctx.mapping().mapTo(ArrayList(), ::visitMapping)
     checkUcm(mappings.isNotEmpty(), "There must be at least one Unicode to byte mapping")
+    mappings.sortBy(UcmMapping::bs)
 
     return UcmData(
       codeSetName = codeSetName,

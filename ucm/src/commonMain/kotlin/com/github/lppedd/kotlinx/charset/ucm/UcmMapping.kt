@@ -11,10 +11,10 @@ public class UcmMapping(
 ) {
   override fun toString(): String {
     val bsStr = "0x" + bs.toHexString(bsPrintFormat)
-    val csStr = cs.joinToString(separator = "+") {
-      "U" + it.toHexString(cpPrintFormat)
+    val csStr = cs.joinToString(separator = "+", prefix = "U+") {
+      it.toHexString(cpPrintFormat)
     }
 
-    return "$bsStr $csStr |$precision"
+    return "$bsStr  $csStr  |$precision"
   }
 }

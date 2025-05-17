@@ -52,18 +52,42 @@ abstract class GenerateCharsetTask : DefaultTask() {
       bs.toHex() + " --> " + cp.toUnicodeChar()
   }
 
+  /**
+   * @property bs The hex byte sequence parsed as an int.
+   *   The byte sequence may represent 1 byte in case of SBCS,
+   *   or 2 bytes in case of DBCS.
+   * @property cs The hex codepoint value parsed as an int
+   */
+  internal data class MappingEntry2(val bs: Int, val cs: IntArray) : Comparable<MappingEntry2> {
+    override fun compareTo(other: MappingEntry2): Int =
+      bs - other.bs
+
+    override fun equals(other: Any?): Boolean =
+      other is MappingEntry2 && other.bs == bs
+
+    override fun hashCode(): Int =
+      bs
+
+    override fun toString(): String =
+      bs.toHex() + " --> " + cs.toUnicodeChars()
+  }
+
   internal object HexFunction : TemplateMethodModelEx {
     override fun exec(arguments: List<*>): Any {
-      val value = arguments[0] as SimpleNumber
-      val length = arguments[1] as SimpleNumber
-      return String.format("0x%0${length.asNumber}X", value.asNumber)
+      val value = (arguments[0] as SimpleNumber).asNumber.toInt()
+      val length = (arguments[1] as SimpleNumber).asNumber.toInt()
+      return if (length < 0) {
+        "0x${Integer.toHexString(value).uppercase()}"
+      } else {
+        String.format("0x%0${length}X", value)
+      }
     }
   }
 
   internal object UnicodeFunction : TemplateMethodModelEx {
     override fun exec(arguments: List<*>): Any {
       val value = arguments[0] as SimpleNumber
-      return String.format("\\u%04X", value.asNumber)
+      return String.format("\\u%04X", value.asNumber.toInt())
     }
   }
 
@@ -88,11 +112,38 @@ abstract class GenerateCharsetTask : DefaultTask() {
     val c2bNR: String,
   )
 
+  internal class ExtendedEbcdicDbcsCharset(
+    val name: String,
+    val aliases: List<String>,
+    val b2Min: Int,
+    val b2Max: Int,
+    val b2cSB: IntArray,
+    val b2c: List<B2CRow>,
+    val c2bSize: Int,
+    val b2cNR: IntArray,
+    val c2bNR: IntArray,
+    val composites: List<CompositeCharsEntry>,
+  )
+
+  internal class B2CRow(
+    val index: Int,
+    val cps: IntArray,
+  )
+
+  internal class CompositeCharsEntry(
+    val bs: Int,
+    val cp: Int,
+    val cp2: Int,
+  )
+
   @get:Nested
   protected val sbcs = project.container<CharsetOptions>()
 
   @get:Nested
   protected val ebcdicDbcs = project.container<EbcdicDbcsCharsetOptions>()
+
+  @get:Nested
+  protected val extendedEbcdicDbcs = project.container<ExtendedEbcdicDbcsCharsetOptions>()
 
   /**
    * The directory where source `.map` files are localed.
@@ -149,28 +200,56 @@ abstract class GenerateCharsetTask : DefaultTask() {
     item.configure()
   }
 
+  /**
+   * Adds an _extended_ EBCDIC Double Byte Character Set to the list of charsets to generate.
+   *
+   * The _extended_ variant supports surrogate pairs and composite character sequences.
+   *
+   * @param b2Min The smallest legal second byte value, included
+   * @param b2Max The largest legal second byte value, included
+   */
+  fun extendedEbcdicDbcs(
+    name: String,
+    b2Min: Int,
+    b2Max: Int,
+    configure: ExtendedEbcdicDbcsCharsetOptions.() -> Unit = {},
+  ) {
+    val item = extendedEbcdicDbcs.create(name)
+    item.b2Min.set(b2Min)
+    item.b2Max.set(b2Max)
+    item.configure()
+  }
+
   @TaskAction
   protected fun execute() {
     val mappingsDir = mappingsDir.get().asFile
     val expectDir = expectDir.get().asFile
     val nonJvmDir = nonJvmDir.get().asFile
     val jvmDir = jvmDir.get().asFile
-    val charsets = sbcs.asSequence() + ebcdicDbcs.asSequence()
+    val charsets = extendedEbcdicDbcs.asSequence() + ebcdicDbcs.asSequence() + sbcs.asSequence()
 
     val packageName = packageName.get()
     val classNames = mutableListOf<String>()
 
     for (options in charsets) {
-      // Generate the expect declaration
-      generateExpectCharset(expectDir, options)
+      val outDir = if (options.common.get()) {
+        // Output the generated declaration in the common source set
+        expectDir
+      } else {
+        // Generate the expect declaration
+        generateExpectCharset(expectDir, options)
 
-      // Generate the JVM-specific declaration
-      generateJvmCharset(jvmDir, options)
+        // Generate the JVM-specific declaration
+        generateJvmCharset(jvmDir, options)
 
-      // Generate the non-JVM (e.g. JS/WASM/Native) declaration
+        // Output the generated declaration in the nonJvm source set
+        nonJvmDir
+      }
+
       val className = when (options) {
-        is EbcdicDbcsCharsetOptions -> generateEbcdicDbcs(mappingsDir, nonJvmDir, options)
-        is CharsetOptions -> generateSbcs(mappingsDir, nonJvmDir, options)
+        is ExtendedEbcdicDbcsCharsetOptions -> generateExtendedEbcdicDbcs(mappingsDir, outDir, options)
+        is EbcdicDbcsCharsetOptions -> generateEbcdicDbcs(mappingsDir, outDir, options)
+        is CharsetOptions -> generateSbcs(mappingsDir, outDir, options)
         else -> error("Unknown options type")
       }
 
@@ -410,12 +489,184 @@ abstract class GenerateCharsetTask : DefaultTask() {
     return className
   }
 
+  @Suppress("FoldInitializerAndIfToElvis")
+  private fun generateExtendedEbcdicDbcs(mappingsDir: File, baseDir: File, options: EbcdicDbcsCharsetOptions): String {
+    val charsetName = options.name
+    val mapFile = mappingsDir.resolve("$charsetName.map")
+    val mapEntries = mapFile.readMappingEntries2()
+
+    if (mapEntries == null) {
+      throw GradleException("The $charsetName.map file does not exist at: $mapFile")
+    }
+
+    // 1. Filter out composite chars
+    // 2. Sort by byte sequence
+    val sortedMapEntries = mapEntries
+      .filter { it.cs.size == 1 }
+      .sortedBy { it.bs }
+      .map { MappingEntry(it.bs, it.cs[0]) }
+
+    val b2Min = options.b2Min.get()
+    val b2Max = options.b2Max.get()
+
+    // Discard all 1-byte entries as the b2c table must handle double bytes only.
+    val dbcsEntries = sortedMapEntries.filter { it.bs > 255 }
+    val b2c = generateB2CArray(dbcsEntries, b2Min, b2Max)
+
+    // Prepare the list of characters to build the b2cSBStr value.
+    // This string will contain all the single byte -> char mappings.
+    val b2cSB = IntArray(256) { 0xFFFD }
+    var hasSingleBytes = false
+
+    for ((bs, cp) in sortedMapEntries) {
+      // We must consider only single byte entries
+      if (bs > 255) {
+        break
+      }
+
+      val i = bs and 0xFF /* to unsigned */
+      b2cSB[i] = cp
+
+      if (!hasSingleBytes) {
+        hasSingleBytes = cp != 0xFFFD
+      }
+    }
+
+    val c2bFile = mappingsDir.resolve("$charsetName.c2b")
+    val c2bEntries = c2bFile.readMappingEntries2() ?: emptyList()
+    val sortedC2bEntries = c2bEntries
+      .filter { it.cs.size == 1 }
+      .sortedBy { it.bs }
+      .map { MappingEntry(it.bs, it.cs[0]) }
+
+    val cb2NR = sortedC2bEntries.flatMap { listOf(it.bs, it.cp) }.toIntArray()
+    val activeHighs = mutableSetOf<Int>()
+
+    for ((_, cp) in sortedMapEntries) {
+      val high = cp ushr 8
+      activeHighs.add(high)
+    }
+
+    // c2b non-roundtrip mappings contribute to the c2b array size
+    for ((_, cp) in sortedC2bEntries) {
+      val high = cp ushr 8
+      activeHighs.add(high)
+    }
+
+    // The first 256 indexes are reserved for unmappable segments
+    val c2bSize = (1 + activeHighs.size) * 256
+
+    val nrFile = mappingsDir.resolve("$charsetName.nr")
+    val nrEntries = nrFile.readMappingEntries2() ?: emptyList()
+    val sortedNrEntries = nrEntries
+      .filter { it.cs.size == 1 }
+      .sortedBy { it.bs }
+      .map { MappingEntry(it.bs, it.cs[0]) }
+
+    val b2cNR = sortedNrEntries.flatMap { listOf(it.bs, it.cp) }.toIntArray()
+
+    val template = freemarker.getTemplate("CharsetExtendedEbcdicDbcs.ftl")
+    val data = mutableMapOf<String, Any>()
+
+    // Custom functions
+    data["toHex"] = HexFunction
+    data["toUnicode"] = UnicodeFunction
+
+    val className = options.className.getOrElse(charsetName)
+    data["packageName"] = packageName.get()
+    data["className"] = className
+    data["isCommon"] = options.common.get()
+
+    // Charset information
+    val aliases = options.aliases.getOrElse(emptyList())
+    val composites = mapEntries
+      .filter { it.cs.size > 1 }
+      .sortedBy { it.bs }
+      .map {
+        CompositeCharsEntry(
+          bs = it.bs,
+          cp = it.cs[0],
+          cp2 = it.cs[1],
+        )
+      }
+
+    data["charset"] = ExtendedEbcdicDbcsCharset(
+      name = charsetName,
+      aliases = aliases,
+      b2Min = b2Min,
+      b2Max = b2Max,
+      b2cSB = b2cSB,
+      b2c = b2c,
+      c2bSize = c2bSize,
+      b2cNR = b2cNR,
+      c2bNR = cb2NR,
+      composites = composites,
+    )
+
+    val file = baseDir.resolve("$className.kt")
+    val writer = file.bufferedWriter()
+    writer.use {
+      template.process(data, writer)
+    }
+
+    return className
+  }
+
+  private fun generateB2CArray(entries: List<MappingEntry>, b2Min: Int, b2Max: Int): List<B2CRow> {
+    // A 256x256 table, where a row represents the first byte, and a column represents the second byte
+    val b2c = TreeMap<Int, IntArray>()
+
+    // We now loop the double byte entries, where each unique first byte
+    // value represents a b2c array index.
+    // For example in IBM1390, the first double byte mapping is 0x4040,
+    // which means we need to insert all in-range (b2Min-b2Max) 0x40XX
+    // codepoints at b2c[0x40], e.g. b2c[0x40] = intArrayOf(0x3000, 0x03B1, ...)
+    var lead = -1
+    var i = 0
+
+    while (i < entries.size) {
+      val (bs, cp) = entries[i++]
+      check(bs > 0xFF)
+
+      val b1 = bs.firstByte()
+      val b2 = bs.secondByte()
+      val b2cRow = IntArray(b2Max - b2Min + 1) { 0xFFFD /* unmappable decoding */ }
+
+      if (b2 in b2Min..b2Max) {
+        b2cRow[b2 - b2Min] = cp
+      }
+
+      if (b1 != lead) {
+        lead = b1
+
+        while (i < entries.size) {
+          val (sbs, scp) = entries[i++]
+
+          if (b1 != sbs.firstByte()) {
+            i--
+            break
+          }
+
+          val sb2 = sbs.secondByte()
+
+          if (sb2 in b2Min..b2Max) {
+            b2cRow[sb2 - b2Min] = scp
+          }
+        }
+
+        b2c[b1] = b2cRow
+      }
+    }
+
+    return b2c.map { B2CRow(it.key, it.value) }
+  }
+
   private fun generateB2CStr(entries: List<MappingEntry>, b2Min: Int, b2Max: Int): List<String> {
     // Discard all 1-byte entries as we are dealing with DBCS here.
     // Entries MUST be already ordered by byte sequence here.
     val dbcsEntries = entries.filter { it.bs > 255 }
 
-    // This array represents the slots pf the String[] b2cStr
+    // This array represents the slots of String[] b2cStr
     val b2cStr = MutableList(256) { "null" }
 
     // We now loop the DBCS entries, where each unique lead byte
@@ -489,6 +740,41 @@ abstract class GenerateCharsetTask : DefaultTask() {
     return MappingEntry(
       bs = Integer.parseInt(bsHex, 16),
       cp = Integer.parseInt(cpHex, 16),
+    )
+  }
+
+  private fun File.readMappingEntries2(): List<MappingEntry2>? {
+    if (!this.exists()) {
+      return null
+    }
+
+    return this.readLines(Charsets.UTF_8)
+      .map(String::trim)
+      .filterNot {
+        // Comment line, or empty
+        it.startsWith("#") || it.isEmpty()
+      }
+      .map(::parseMappingEntry2)
+  }
+
+  private fun parseMappingEntry2(line: String): MappingEntry2 {
+    var (bsHex, cpHex) = line.split(wsRegex)
+
+    if (bsHex.startsWith("0x")) {
+      bsHex = bsHex.drop(2)
+    }
+
+    if (cpHex.startsWith("U+")) {
+      cpHex = cpHex.drop(2)
+    }
+
+    val cs = cpHex.split("+")
+      .map { Integer.parseInt(it, 16) }
+      .toIntArray()
+
+    return MappingEntry2(
+      bs = Integer.parseInt(bsHex, 16),
+      cs = cs,
     )
   }
 }

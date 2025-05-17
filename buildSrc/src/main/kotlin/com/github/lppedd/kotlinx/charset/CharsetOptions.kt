@@ -24,4 +24,12 @@ open class CharsetOptions(@get:Input val name: String, objectFactory: ObjectFact
    */
   @get:Input
   val className: Property<String> = objectFactory.property<String>().convention(name)
+
+  /**
+   * Whether the generated declaration should be outputted in the common source set.
+   *
+   * `false` by default.
+   */
+  @get:Input
+  val common: Property<Boolean> = objectFactory.property<Boolean>().convention(false)
 }

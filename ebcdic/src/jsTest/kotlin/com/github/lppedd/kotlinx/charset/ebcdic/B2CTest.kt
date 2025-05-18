@@ -5,7 +5,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalStdlibApi::class)
-abstract class CharsetTest(
+abstract class B2CTest(
   private val charset: XCharset,
   private val b2cFile: String,
 ) {

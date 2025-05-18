@@ -1,7 +1,5 @@
 package com.github.lppedd.kotlinx.charset
 
-import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_ENCODING
-
 /**
  * @author Edoardo Luppi
  */
@@ -9,28 +7,11 @@ internal class EbcdicDbcsEncoder(
   private val c2b: CharArray,
   private val c2bIndex: CharArray,
 ) : XCharsetEncoder {
-  companion object {
-    // The SBCS mode identifier
-    const val SBCS: Int = 0
-
-    // The DBCS mode identifier
-    const val DBCS: Int = 1
-
-    // Shift-Out (switch to DBCS mode)
-    const val SO: Int = 0x0E
-
-    // Shift-In (switch to SBCS mode)
-    const val SI: Int = 0x0F
-
-    // The highest byte value that is considered a single-byte character
-    const val MAX_SINGLE_BYTE: Int = 0xFF
-  }
-
   // The replacement character in case of malformed or unmappable bytes
   private var replacement: ByteArray? = byteArrayOf(0x6F)
 
   // The encoder starts in SBCS mode
-  private var mode: Int = SBCS
+  private var mode: Int = Ebcdic.SBCS
 
   override fun encode(value: String): ByteArray {
     reset()
@@ -44,7 +25,7 @@ internal class EbcdicDbcsEncoder(
       val c = value[sp++]
       val bb = encodeChar(c)
 
-      if (bb == UNMAPPABLE_ENCODING.code) {
+      if (bb == CharsetMapping.UNMAPPABLE_ENCODING.code) {
         val repl = replOrThrow("Character ${c.toHex()} is not mapped to a valid byte sequence")
 
         // In UTF-16, code points beyond uFFFF are encoded as surrogate pairs.
@@ -64,26 +45,26 @@ internal class EbcdicDbcsEncoder(
         continue
       }
 
-      if (bb > MAX_SINGLE_BYTE) {
-        if (mode == SBCS) {
-          mode = DBCS
-          dst[dp++] = SO.toByte()
+      if (bb > CharsetMapping.MAX_SINGLE_BYTE) {
+        if (mode == Ebcdic.SBCS) {
+          mode = Ebcdic.DBCS
+          dst[dp++] = Ebcdic.SO.toByte()
         }
 
         dst[dp++] = (bb shr 8).toByte()
         dst[dp++] = bb.toByte()
       } else {
-        if (mode == DBCS) {
-          mode = SBCS
-          dst[dp++] = SI.toByte()
+        if (mode == Ebcdic.DBCS) {
+          mode = Ebcdic.SBCS
+          dst[dp++] = Ebcdic.SI.toByte()
         }
 
         dst[dp++] = bb.toByte()
       }
     }
 
-    if (mode == DBCS) {
-      dst[dp++] = SI.toByte()
+    if (mode == Ebcdic.DBCS) {
+      dst[dp++] = Ebcdic.SI.toByte()
     }
 
     return dst.copyOf(dp)
@@ -101,7 +82,7 @@ internal class EbcdicDbcsEncoder(
   }
 
   override fun reset() {
-    mode = SBCS
+    mode = Ebcdic.SBCS
   }
 
   private fun replOrThrow(message: String): ByteArray {

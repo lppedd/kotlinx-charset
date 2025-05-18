@@ -1,15 +1,12 @@
 package com.github.lppedd.kotlinx.charset
 
-import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_DECODING
-import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_ENCODING
-
 /**
  * @author Edoardo Luppi
  */
 internal object Sbcs {
   fun initC2B(b2c: CharArray, c2bNR: CharArray, c2b: CharArray, c2bIndex: CharArray) {
-    c2bIndex.fill(UNMAPPABLE_ENCODING)
-    c2b.fill(UNMAPPABLE_ENCODING)
+    c2bIndex.fill(CharsetMapping.UNMAPPABLE_ENCODING)
+    c2b.fill(CharsetMapping.UNMAPPABLE_ENCODING)
 
     var offset = 0
     var i = 0
@@ -17,7 +14,7 @@ internal object Sbcs {
     while (i < b2c.size) {
       val c = b2c[i]
 
-      if (c == UNMAPPABLE_DECODING) {
+      if (c == CharsetMapping.UNMAPPABLE_DECODING) {
         i++
         continue
       }
@@ -26,7 +23,7 @@ internal object Sbcs {
       val high = charCode shr 8
       val low = charCode and 0xFF
 
-      if (c2bIndex[high] == UNMAPPABLE_ENCODING) {
+      if (c2bIndex[high] == CharsetMapping.UNMAPPABLE_ENCODING) {
         c2bIndex[high] = offset.toChar()
         offset += 256
       }
@@ -46,7 +43,7 @@ internal object Sbcs {
       val high = charCode shr 8
       val low = charCode and 0xFF
 
-      if (c2bIndex[high] == UNMAPPABLE_ENCODING) {
+      if (c2bIndex[high] == CharsetMapping.UNMAPPABLE_ENCODING) {
         c2bIndex[high] = offset.toChar()
         offset += 256
       }

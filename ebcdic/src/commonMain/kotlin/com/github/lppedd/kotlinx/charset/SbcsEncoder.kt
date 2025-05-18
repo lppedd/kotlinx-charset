@@ -1,7 +1,5 @@
 package com.github.lppedd.kotlinx.charset
 
-import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_ENCODING
-
 /**
  * @author Edoardo Luppi
  */
@@ -23,7 +21,7 @@ internal class SbcsEncoder(
       val ch = value[sp++]
       val byte = encode(ch)
 
-      if (byte != UNMAPPABLE_ENCODING) {
+      if (byte != CharsetMapping.UNMAPPABLE_ENCODING) {
         bytes[dp++] = byte.code.toByte()
         continue
       }
@@ -62,8 +60,8 @@ internal class SbcsEncoder(
     val high = ch.code shr 8
     val offset = c2bIndex[high]
 
-    if (offset == UNMAPPABLE_ENCODING) {
-      return UNMAPPABLE_ENCODING
+    if (offset == CharsetMapping.UNMAPPABLE_ENCODING) {
+      return offset
     }
 
     val low = ch.code and 0xFF

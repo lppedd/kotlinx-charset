@@ -1,7 +1,5 @@
 package com.github.lppedd.kotlinx.charset
 
-import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_DECODING
-
 /**
  * @author Edoardo Luppi
  */
@@ -18,7 +16,7 @@ internal class SbcsDecoder(private val b2c: CharArray) : XCharsetDecoder {
       val b = bytes[i].toInt() and 0xFF /* to unsigned */
       val c = b2c[b]
 
-      if (c == UNMAPPABLE_DECODING) {
+      if (c == CharsetMapping.UNMAPPABLE_DECODING) {
         val repl = replOrThrow("Byte ${b.toHex()} is not mapped to a valid character")
         sb.append(repl)
       } else {

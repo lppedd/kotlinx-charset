@@ -1,8 +1,5 @@
 package com.github.lppedd.kotlinx.charset
 
-import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_DECODING
-import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_ENCODING
-
 /**
  * @author Edoardo Luppi
  */
@@ -18,7 +15,7 @@ internal object Dbcs {
     c2bIndex: CharArray,
   ) {
     // Reset the c2b table
-    c2b.fill(UNMAPPABLE_ENCODING)
+    c2b.fill(CharsetMapping.UNMAPPABLE_ENCODING)
 
     // Leave room for a shared unmappable segment at c2bIndex index 0
     var offset = 256
@@ -41,14 +38,14 @@ internal object Dbcs {
 
       if (b < 256 && b2cSBCA.isNotEmpty()) {
         if (b2cSBCA[b] == c) {
-          b2cSBCA[b] = UNMAPPABLE_DECODING
+          b2cSBCA[b] = CharsetMapping.UNMAPPABLE_DECODING
         }
       } else {
         val chars = b2cCA[b shr 8]
         val i = (b and 0xFF) - b2Min
 
         if (chars != null && chars[i] == c) {
-          chars[i] = UNMAPPABLE_DECODING
+          chars[i] = CharsetMapping.UNMAPPABLE_DECODING
         }
       }
     }
@@ -58,7 +55,7 @@ internal object Dbcs {
     for (b in b2cSBCA.indices) {
       val c = b2cSBCA[b].code
 
-      if (c == UNMAPPABLE_DECODING.code) {
+      if (c == CharsetMapping.UNMAPPABLE_DECODING.code) {
         continue
       }
 
@@ -84,7 +81,7 @@ internal object Dbcs {
       for (b2 in b2Min..b2Max) {
         val c = db[b2 - b2Min].code
 
-        if (c == UNMAPPABLE_DECODING.code) {
+        if (c == CharsetMapping.UNMAPPABLE_DECODING.code) {
           continue
         }
 

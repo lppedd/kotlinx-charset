@@ -1,7 +1,5 @@
 package com.github.lppedd.kotlinx.charset
 
-import com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_DECODING
-
 /**
  * @author Edoardo Luppi
  */
@@ -11,25 +9,11 @@ internal class EbcdicDbcsDecoder(
   private val b2cSB: CharArray,
   private val b2c: Array<CharArray>,
 ) : XCharsetDecoder {
-  companion object {
-    // The SBCS mode identifier
-    const val SBCS: Int = 0
-
-    // The DBCS mode identifier
-    const val DBCS: Int = 1
-
-    // Shift-Out (switch to DBCS mode)
-    const val SO: Int = 0x0E
-
-    // Shift-In (switch to SBCS mode)
-    const val SI: Int = 0x0F
-  }
-
   // The replacement character in case of malformed or unmappable bytes
   private var replacement: Char? = '\uFFFD'
 
   // The decoder starts in SBCS mode
-  private var mode: Int = SBCS
+  private var mode: Int = Ebcdic.SBCS
 
   @Suppress("MoveVariableDeclarationIntoWhen")
   override fun decode(bytes: ByteArray): String {
@@ -43,27 +27,27 @@ internal class EbcdicDbcsDecoder(
       val b1 = bytes[i++].toInt() and 0xFF /* to unsigned */
 
       when (b1) {
-        SO -> if (mode != SBCS) {
+        Ebcdic.SO -> if (mode != Ebcdic.SBCS) {
           val c = replOrThrow("Malformed input")
           sb.append(c)
         } else {
-          mode = DBCS
+          mode = Ebcdic.DBCS
         }
 
-        SI -> if (mode != DBCS) {
+        Ebcdic.SI -> if (mode != Ebcdic.DBCS) {
           val c = replOrThrow("Malformed input")
           sb.append(c)
         } else {
-          mode = SBCS
+          mode = Ebcdic.SBCS
         }
 
         else -> {
           var c: Char
 
-          if (mode == SBCS) {
+          if (mode == Ebcdic.SBCS) {
             c = b2cSB[b1]
 
-            if (c == UNMAPPABLE_DECODING) {
+            if (c == CharsetMapping.UNMAPPABLE_DECODING) {
               c = replOrThrow("Byte ${b1.toHex()} is not mapped to a valid character")
             }
           } else {
@@ -80,7 +64,7 @@ internal class EbcdicDbcsDecoder(
               } else {
                 c = b2c[b1][b2 - b2Min]
 
-                if (c == UNMAPPABLE_DECODING) {
+                if (c == CharsetMapping.UNMAPPABLE_DECODING) {
                   val b1b2 = (b1 shl 8) or (b2 and 0xFF)
                   c = replOrThrow("Bytes ${b1b2.toHex()} are not mapped to a valid character")
                 }
@@ -109,7 +93,7 @@ internal class EbcdicDbcsDecoder(
   }
 
   override fun reset() {
-    mode = SBCS
+    mode = Ebcdic.SBCS
   }
 
   private fun replOrThrow(message: String): Char {

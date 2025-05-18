@@ -124,6 +124,14 @@ class IBM1390Test {
   }
 
   @Test
+  fun encodeNonRoundtripB2C() {
+    // See x-IBM1390.nr
+    val str = "\u20AC"
+    val hex = IBM1390.encodeToHexString(str)
+    assertEquals("E1", hex)
+  }
+
+  @Test
   fun encodeUnmapped() {
     val str = "\u6DC0\u0069\u10FF\u011D\u28BE\u0000\u008E\u31F7\u02A9"
     val hex = IBM1390.encodeToHexString(str)

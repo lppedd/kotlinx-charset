@@ -11,9 +11,16 @@ import kotlin.test.assertFailsWith
 class IBM1390Test {
   @Test
   fun decodeSingleBytes() {
-    val bytes = byteArrayOf(0x2B.toByte(), 0xF4.toByte(), 0x41.toByte())
+    val bytes = byteArrayOf(
+      0x2B.toByte(),
+      0xF4.toByte(),
+      0x41.toByte(),
+      0x15.toByte(),
+      0x25.toByte(),
+    )
+
     val hex = IBM1390.decodeToHexString(bytes)
-    assertEquals("\u008B\u0034\uFF61".toHexString(), hex)
+    assertEquals("\u008B\u0034\uFF61\u000A\u000A".toHexString(), hex)
   }
 
   @Test
@@ -80,9 +87,9 @@ class IBM1390Test {
 
   @Test
   fun encodeSingleBytes() {
-    val str = "\u003C\uFF84\u005C"
+    val str = "\u003C\uFF84\u005C\u000A\u0085"
     val bytes = IBM1390.encodeToHexString(str)
-    assertEquals("4C,95,B2", bytes)
+    assertEquals("4C,95,B2,15,15", bytes)
   }
 
   @Test

@@ -38,7 +38,7 @@ internal object ExtendedDbcs {
         val i = (b and 0xFF) - b2Min
 
         if (b2cRow != null && b2cRow[i] == c) {
-          b2cRow[i] = CharsetMapping.UNMAPPABLE_DECODING.code
+          b2cRow[i] = CharsetMapping.UNMAPPABLE_DECODING_INT
         }
       }
     }
@@ -48,7 +48,7 @@ internal object ExtendedDbcs {
     for (b in b2cSB.indices) {
       val c = b2cSB[b].code
 
-      if (c == CharsetMapping.UNMAPPABLE_DECODING.code) {
+      if (c == CharsetMapping.UNMAPPABLE_DECODING_INT) {
         continue
       }
 
@@ -74,7 +74,7 @@ internal object ExtendedDbcs {
       for (b2 in b2Min..b2Max) {
         val c = b2cRow[b2 - b2Min]
 
-        if (c == CharsetMapping.UNMAPPABLE_DECODING.code) {
+        if (c == CharsetMapping.UNMAPPABLE_DECODING_INT) {
           continue
         }
 

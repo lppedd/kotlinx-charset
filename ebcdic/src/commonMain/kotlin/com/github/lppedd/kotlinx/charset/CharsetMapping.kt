@@ -8,7 +8,10 @@ package com.github.lppedd.kotlinx.charset
  */
 internal object CharsetMapping {
   const val UNMAPPABLE_DECODING: Char = '\uFFFD'
+  const val UNMAPPABLE_DECODING_INT: Int = 0xFFFD
+
   const val UNMAPPABLE_ENCODING: Char = '\uFFFD'
+  const val UNMAPPABLE_ENCODING_INT: Int = 0xFFFD
 
   /**
    * The highest byte value that is considered a single-byte character.

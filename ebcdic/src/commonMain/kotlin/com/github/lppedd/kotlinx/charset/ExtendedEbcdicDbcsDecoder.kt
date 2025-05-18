@@ -71,7 +71,7 @@ internal class ExtendedEbcdicDbcsDecoder(
 
           val c = b2c[b1][b2 - b2Min]
 
-          if (c == CharsetMapping.UNMAPPABLE_DECODING.code) {
+          if (c == CharsetMapping.UNMAPPABLE_DECODING_INT) {
             // Check if the byte sequence maps to a composite character sequence
             val bs = (b1 shl 8) or (b2 and 0xFF)
             val cc = findCompositeCharacters(bs)

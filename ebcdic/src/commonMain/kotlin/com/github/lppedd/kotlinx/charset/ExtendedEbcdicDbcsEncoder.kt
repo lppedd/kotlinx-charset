@@ -51,7 +51,7 @@ internal class ExtendedEbcdicDbcsEncoder(
         var isComposite = true
         var bs = encodeComposite(leftoverBase, c)
 
-        if (bs == CharsetMapping.UNMAPPABLE_ENCODING.code) {
+        if (bs == CharsetMapping.UNMAPPABLE_ENCODING_INT) {
           bs = encodeChar(leftoverBase)
           // TODO: should probably check if bs is unmappable
           isComposite = false
@@ -91,7 +91,7 @@ internal class ExtendedEbcdicDbcsEncoder(
         continue
       }
 
-      if (bb != CharsetMapping.UNMAPPABLE_ENCODING.code) {
+      if (bb != CharsetMapping.UNMAPPABLE_ENCODING_INT) {
         // This is a double byte mapping
         if (mode == Ebcdic.SBCS) {
           mode = Ebcdic.DBCS
@@ -123,7 +123,7 @@ internal class ExtendedEbcdicDbcsEncoder(
 
         bb = encodeSurrogate(c, c2)
 
-        if (bb == CharsetMapping.UNMAPPABLE_ENCODING.code) {
+        if (bb == CharsetMapping.UNMAPPABLE_ENCODING_INT) {
           // Unmapped Unicode code point
           dp = appendReplacementOrThrow(dst, dp) {
             "The surrogate pair ${c.toHex()}+${c2.toHex()} is not mapped to a valid byte sequence"
@@ -204,7 +204,7 @@ internal class ExtendedEbcdicDbcsEncoder(
       return c2bComposites[i].bs
     }
 
-    return CharsetMapping.UNMAPPABLE_ENCODING.code
+    return CharsetMapping.UNMAPPABLE_ENCODING_INT
   }
 
   private fun encodeSurrogate(high: Char, low: Char): Int {

@@ -25,7 +25,7 @@ internal class EbcdicDbcsEncoder(
       val c = value[sp++]
       val bb = encodeChar(c)
 
-      if (bb == CharsetMapping.UNMAPPABLE_ENCODING.code) {
+      if (bb == CharsetMapping.UNMAPPABLE_ENCODING_INT) {
         val repl = replOrThrow("Character ${c.toHex()} is not mapped to a valid byte sequence")
 
         // In UTF-16, code points beyond uFFFF are encoded as surrogate pairs.

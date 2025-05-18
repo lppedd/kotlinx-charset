@@ -55,7 +55,7 @@ internal object Dbcs {
     for (b in b2cSBCA.indices) {
       val c = b2cSBCA[b].code
 
-      if (c == CharsetMapping.UNMAPPABLE_DECODING.code) {
+      if (c == CharsetMapping.UNMAPPABLE_DECODING_INT) {
         continue
       }
 
@@ -81,7 +81,7 @@ internal object Dbcs {
       for (b2 in b2Min..b2Max) {
         val c = db[b2 - b2Min].code
 
-        if (c == CharsetMapping.UNMAPPABLE_DECODING.code) {
+        if (c == CharsetMapping.UNMAPPABLE_DECODING_INT) {
           continue
         }
 

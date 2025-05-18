@@ -64,7 +64,7 @@ class IBM1390Test {
       0xFD.toByte(),
       0xCC.toByte(),
       0x48.toByte(),
-      0x42.toByte(),
+      0x42.toByte(),  // First byte of a double byte, but unmapped as there is no second byte
     )
 
     val hex = IBM1390.decodeToHexString(bytes)
@@ -118,9 +118,9 @@ class IBM1390Test {
 
   @Test
   fun encodeNonRoundtripC2B() {
-    val str = "\u6805\u8346\uFFEB"
+    val str = "\u6805\u8346\uF86F"
     val hex = IBM1390.encodeToHexString(str)
-    assertEquals("0E,51,F1,53,B3,0F,3F", hex)
+    assertEquals("0E,51,F1,53,B3,44,6E,0F", hex)
   }
 
   @Test

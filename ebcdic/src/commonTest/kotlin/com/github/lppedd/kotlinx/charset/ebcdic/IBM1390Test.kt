@@ -32,6 +32,69 @@ class IBM1390Test {
 
   @Test
   fun decodeComposites() {
+    val compositeByteSeq = arrayOf(
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB5.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB6.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB7.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB8.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB9.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBA.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBB.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBC.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBD.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBE.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBF.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC0.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC1.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC2.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC3.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC4.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC5.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC6.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC7.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC8.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC9.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xCA.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xCB.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xCC.toByte()),
+      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xCD.toByte()),
+    )
+
+    val compositeChars = arrayOf(
+      "\u304B\u309A",
+      "\u304D\u309A",
+      "\u304F\u309A",
+      "\u3051\u309A",
+      "\u3053\u309A",
+      "\u30AB\u309A",
+      "\u30AD\u309A",
+      "\u30AF\u309A",
+      "\u30B1\u309A",
+      "\u30B3\u309A",
+      "\u30BB\u309A",
+      "\u30C4\u309A",
+      "\u30C8\u309A",
+      "\u31F7\u309A",
+      "\u00E6\u0300",
+      "\u0254\u0300",
+      "\u0254\u0301",
+      "\u028C\u0300",
+      "\u028C\u0301",
+      "\u0259\u0300",
+      "\u0259\u0301",
+      "\u025A\u0300",
+      "\u025A\u0301",
+      "\u02E9\u02E5",
+      "\u02E5\u02E9",
+    )
+
+    // Test all composite byte sequences, one by one
+    for (i in compositeByteSeq.indices) {
+      val hex = IBM1390.decodeToHexString(compositeByteSeq[i])
+      assertEquals(compositeChars[i].toHexString(), hex)
+    }
+
+    // Test a couple of random composite byte sequences
     val bytes = byteArrayOf(
       SO.toByte(),    // Start of double byte mode
       0xEC.toByte(),
@@ -109,6 +172,42 @@ class IBM1390Test {
 
   @Test
   fun encodeComposites() {
+    val composites = arrayOf(
+      // Expected    Unicode code points
+      "0E,EC,B5,0F", "\u304B\u309A",
+      "0E,EC,B6,0F", "\u304D\u309A",
+      "0E,EC,B7,0F", "\u304F\u309A",
+      "0E,EC,B8,0F", "\u3051\u309A",
+      "0E,EC,B9,0F", "\u3053\u309A",
+      "0E,EC,BA,0F", "\u30AB\u309A",
+      "0E,EC,BB,0F", "\u30AD\u309A",
+      "0E,EC,BC,0F", "\u30AF\u309A",
+      "0E,EC,BD,0F", "\u30B1\u309A",
+      "0E,EC,BE,0F", "\u30B3\u309A",
+      "0E,EC,BF,0F", "\u30BB\u309A",
+      "0E,EC,C0,0F", "\u30C4\u309A",
+      "0E,EC,C1,0F", "\u30C8\u309A",
+      "0E,EC,C2,0F", "\u31F7\u309A",
+      "0E,EC,C3,0F", "\u00E6\u0300",
+      "0E,EC,C4,0F", "\u0254\u0300",
+      "0E,EC,C5,0F", "\u0254\u0301",
+      "0E,EC,C6,0F", "\u028C\u0300",
+      "0E,EC,C7,0F", "\u028C\u0301",
+      "0E,EC,C8,0F", "\u0259\u0300",
+      "0E,EC,C9,0F", "\u0259\u0301",
+      "0E,EC,CA,0F", "\u025A\u0300",
+      "0E,EC,CB,0F", "\u025A\u0301",
+      "0E,EC,CC,0F", "\u02E9\u02E5",
+      "0E,EC,CD,0F", "\u02E5\u02E9",
+    )
+
+    // Test all composite characters, one by one
+    for (i in composites.indices step 2) {
+      val hex = IBM1390.encodeToHexString(composites[i + 1])
+      assertEquals(composites[i], hex)
+    }
+
+    // Test a couple of random composite character
     //         |0xECB5     |0xECCD
     val str = "\u304B\u309A\u02E5\u02E9"
     val hex = IBM1390.encodeToHexString(str)

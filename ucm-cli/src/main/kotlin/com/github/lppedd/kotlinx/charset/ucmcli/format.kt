@@ -1,8 +1,5 @@
-package com.github.lppedd.kotlinx.charset.ucm
+package com.github.lppedd.kotlinx.charset.ucmcli
 
-import kotlin.jvm.JvmSynthetic
-
-@JvmSynthetic
 @OptIn(ExperimentalStdlibApi::class)
 internal val bsPrintFormat = HexFormat {
   upperCase = true
@@ -12,7 +9,6 @@ internal val bsPrintFormat = HexFormat {
   }
 }
 
-@JvmSynthetic
 @OptIn(ExperimentalStdlibApi::class)
 internal val cpPrintFormat = HexFormat {
   upperCase = true

@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.1.20"
 kotlinxIO = "0.7.0"
+clikt = "5.0.3"
 freemarker = "2.3.34"
 antlrKotlin = "1.0.2"
 mavenPublish = "0.31.0"
@@ -8,6 +9,7 @@ npmPublish = "4.0.2"
 
 [libraries]
 kotlinxIO = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIO" }
+clikt = { module = "com.github.ajalt.clikt:clikt", version.ref = "clikt" }
 freemarker = { module = "org.freemarker:freemarker", version.ref = "freemarker" }
 antlrKotlin = { module = "com.strumenta:antlr-kotlin-runtime", version.ref = "antlrKotlin" }
 

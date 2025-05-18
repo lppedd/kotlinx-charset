@@ -1,11 +1,6 @@
 package com.github.lppedd.kotlinx.charset.ebcdic
 
-import com.github.lppedd.kotlinx.charset.XCharset
-import com.github.lppedd.kotlinx.charset.decodeToHexString
-import com.github.lppedd.kotlinx.charset.readResourceText
-import com.github.lppedd.kotlinx.charset.toHexString
-import kotlinx.io.Buffer
-import kotlinx.io.readByteArray
+import com.github.lppedd.kotlinx.charset.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -21,18 +16,25 @@ abstract class CharsetTest(
   @Test
   fun decodeFromB2CFile() {
     val b2cMappings = readResourceText(b2cFile).trim()
-    val bytes = Buffer()
-    val chars = ArrayList<Char>()
 
     for (line in b2cMappings.lines()) {
       val (bs, c) = parseB2CLine(line)
-      bytes.write(bs)
-      chars.add(c)
+      val expectedHex = charArrayOf(c).toHexString()
+      val hex = charset.decodeToHexString(bs)
+      assertEquals(expectedHex, hex)
     }
+  }
 
-    val expectedHex = chars.toCharArray().toHexString()
-    val hex = charset.decodeToHexString(bytes.readByteArray())
-    assertEquals(expectedHex, hex)
+  @Test
+  fun encodeFromB2CFile() {
+    val b2cMappings = readResourceText(b2cFile).trim()
+
+    for (line in b2cMappings.lines()) {
+      val (bs, c) = parseB2CLine(line)
+      val expectedHex = bs.toHexString()
+      val hex = charset.encodeToHexString(c.toString())
+      assertEquals(expectedHex, hex)
+    }
   }
 
   private fun parseB2CLine(line: String): Pair<ByteArray, Char> {

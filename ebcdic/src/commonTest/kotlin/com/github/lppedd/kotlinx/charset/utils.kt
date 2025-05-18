@@ -28,6 +28,10 @@ internal fun CharArray.toHexString(): String =
     it.code.toHexString(decodeFormat)
   }
 
+@OptIn(ExperimentalStdlibApi::class)
+internal fun ByteArray.toHexString(): String =
+  this.toHexString(encodeFormat)
+
 internal fun XCharset.decodeToHexString(bytes: ByteArray, replacement: String? = ""): String {
   val decoder = this.newDecoder()
 

@@ -36,7 +36,7 @@ internal class EbcdicDbcsEncoder(
     reset()
 
     val length = value.length
-    val dst = ByteArray(length * 3)
+    val dst = ByteArray(length * 4)
     var sp = 0 // source position
     var dp = 0 // destination position
 

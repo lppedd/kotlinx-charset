@@ -207,7 +207,7 @@ class IBM1390Test {
       assertEquals(composites[i], hex)
     }
 
-    // Test a couple of random composite character
+    // Test a couple of random composite characters
     //         |0xECB5     |0xECCD
     val str = "\u304B\u309A\u02E5\u02E9"
     val hex = IBM1390.encodeToHexString(str)

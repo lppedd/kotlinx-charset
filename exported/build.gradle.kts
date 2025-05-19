@@ -1,9 +1,16 @@
+import com.lppedd.kotlinx.charset.setupPom
 import org.gradle.internal.os.OperatingSystem
 
 plugins {
   id("org.jetbrains.kotlin.multiplatform")
   id("kotlinx-charset-maven")
   alias(libs.plugins.npmPublish)
+}
+
+description = "Exports declarations for use outside of Kotlin's realm"
+
+mavenPublishing {
+  setupPom(project)
 }
 
 kotlin {

@@ -1,9 +1,16 @@
 import com.lppedd.kotlinx.charset.GenerateCharsetTask
+import com.lppedd.kotlinx.charset.setupPom
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
   id("kotlinx-charset-kmp")
   id("kotlinx-charset-maven")
+}
+
+description = "Provides support for EBCDIC charsets"
+
+mavenPublishing {
+  setupPom(project)
 }
 
 val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {

@@ -26,7 +26,9 @@ internal class EbcdicDbcsEncoder(
       val bb = encodeChar(c)
 
       if (bb == CharsetMapping.UNMAPPABLE_ENCODING_INT) {
-        val repl = replOrThrow("Character ${c.toHex()} is not mapped to a valid byte sequence")
+        dp = appendReplacementOrThrow(dst, dp) {
+          "Character ${c.toHex()} is not mapped to a valid byte sequence"
+        }
 
         // In UTF-16, code points beyond uFFFF are encoded as surrogate pairs.
         // EBCDIC does not support surrogate pairs and considers them unmappable,
@@ -34,12 +36,6 @@ internal class EbcdicDbcsEncoder(
         // The surrogate pair is replaced by 1 or 2 replacement bytes.
         if (c.isHighSurrogate() && sp < length && value[sp].isLowSurrogate()) {
           sp++
-        }
-
-        dst[dp++] = repl[0]
-
-        if (repl.size > 1) {
-          dst[dp++] = repl[1]
         }
 
         continue
@@ -85,14 +81,16 @@ internal class EbcdicDbcsEncoder(
     mode = Ebcdic.SBCS
   }
 
-  private fun replOrThrow(message: String): ByteArray {
-    val repl = replacement
+  private fun appendReplacementOrThrow(dst: ByteArray, dstIndex: Int, message: () -> String): Int {
+    val repl = replacement ?: throw MessageCharacterCodingException(message())
+    var i = dstIndex
+    dst[i++] = repl[0]
 
-    if (repl != null) {
-      return repl
+    if (repl.size > 1) {
+      dst[i++] = repl[1]
     }
 
-    throw MessageCharacterCodingException(message)
+    return i
   }
 
   private fun encodeChar(ch: Char): Int {

@@ -30,9 +30,9 @@ internal class EbcdicDbcsEncoder(
           "Character ${c.toHex()} is not mapped to a valid byte sequence"
         }
 
-        // In UTF-16, code points beyond uFFFF are encoded as surrogate pairs.
-        // EBCDIC does not support surrogate pairs and considers them unmappable,
-        // so we have to skip the second char (low surrogate).
+        // In UTF-16, code points beyond U+FFFF are encoded as surrogate pairs.
+        // This EBCDIC charset type does not support surrogate pairs and considers
+        // them unmappable, so we have to skip the second char (low surrogate).
         // The surrogate pair is replaced by 1 or 2 replacement bytes.
         if (c.isHighSurrogate() && sp < length && value[sp].isLowSurrogate()) {
           sp++

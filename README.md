@@ -47,7 +47,7 @@ You can register supported EBCDIC charsets to your `XCharsetRegistrar`
 via the `provideCharsets` function.
 
 ```kotlin
-import com.github.lppedd.kotlinx.charset.ebcdic.provideCharsets as provideEbcdicCharsets
+import com.lppedd.kotlinx.charset.ebcdic.provideCharsets as provideEbcdicCharsets
 
 // Your shared charset registry
 private val registrar = XCharsetRegistrar()

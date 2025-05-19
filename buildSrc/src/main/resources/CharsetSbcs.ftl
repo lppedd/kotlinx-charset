@@ -1,10 +1,10 @@
 <#-- @ftlvariable name="packageName" type="java.lang.String" -->
 <#-- @ftlvariable name="className" type="java.lang.String" -->
 <#-- @ftlvariable name="isCommon" type="java.lang.Boolean" -->
-<#-- @ftlvariable name="charset" type="com.github.lppedd.kotlinx.charset.GenerateCharsetTask.SbcsCharset" -->
+<#-- @ftlvariable name="charset" type="com.lppedd.kotlinx.charset.GenerateCharsetTask.SbcsCharset" -->
 package ${packageName}
 
-internal <#if isCommon == false>actual </#if>object ${className} : com.github.lppedd.kotlinx.charset.XCharset {
+internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.kotlinx.charset.XCharset {
   private val b2c: CharArray
   private val c2b: CharArray
   private val c2bIndex: CharArray
@@ -15,11 +15,11 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.github.lp
   <#if isCommon == false>actual </#if>override val aliases: Array<String>
      get() = arrayOf(<#list charset.aliases as alias>"${alias}"<#sep>, </#list>)
 
-  <#if isCommon == false>actual </#if>override fun newDecoder(): com.github.lppedd.kotlinx.charset.XCharsetDecoder =
-    com.github.lppedd.kotlinx.charset.SbcsDecoder(b2c)
+  <#if isCommon == false>actual </#if>override fun newDecoder(): com.lppedd.kotlinx.charset.XCharsetDecoder =
+    com.lppedd.kotlinx.charset.SbcsDecoder(b2c)
 
-  <#if isCommon == false>actual </#if>override fun newEncoder(): com.github.lppedd.kotlinx.charset.XCharsetEncoder =
-    com.github.lppedd.kotlinx.charset.SbcsEncoder(c2b, c2bIndex)
+  <#if isCommon == false>actual </#if>override fun newEncoder(): com.lppedd.kotlinx.charset.XCharsetEncoder =
+    com.lppedd.kotlinx.charset.SbcsEncoder(c2b, c2bIndex)
 
   init {
     val b2cStr = "${charset.b2cStr}"
@@ -39,7 +39,7 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.github.lp
 
     // Remove non-roundtrip .nr entries
     <#items as entry>
-    b2cMap[${toHex(entry.bs, 2)}] = com.github.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_DECODING
+    b2cMap[${toHex(entry.bs, 2)}] = com.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_DECODING
     </#items>
     </#list>
 
@@ -52,6 +52,6 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.github.lp
     </#items>
     </#list>
 
-    com.github.lppedd.kotlinx.charset.Sbcs.initC2B(b2cMap, c2bNR, c2b, c2bIndex)
+    com.lppedd.kotlinx.charset.Sbcs.initC2B(b2cMap, c2bNR, c2b, c2bIndex)
   }
 }

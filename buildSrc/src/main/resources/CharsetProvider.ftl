@@ -6,7 +6,7 @@ package ${packageName}
 
 import kotlin.jvm.JvmName
 
-public fun provideCharsets(registrar: com.github.lppedd.kotlinx.charset.XCharsetRegistrar) {
+public fun provideCharsets(registrar: com.lppedd.kotlinx.charset.XCharsetRegistrar) {
   <#list classNames as className>
   registrar.registerCharset(${className})
   </#list>

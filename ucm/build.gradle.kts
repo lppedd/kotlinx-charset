@@ -31,7 +31,7 @@ val generateKotlinGrammarSource = tasks.register<AntlrKotlinTask>("generateKotli
   }
 
   // We want the generated source files to have this package name
-  val pkgName = "com.github.lppedd.kotlinx.charset.ucm.parser"
+  val pkgName = "com.lppedd.kotlinx.charset.ucm.parser"
   packageName = pkgName
 
   // We want visitors alongside listeners.

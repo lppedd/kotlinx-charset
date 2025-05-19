@@ -1,4 +1,4 @@
-import com.github.lppedd.kotlinx.charset.GenerateCharsetTask
+import com.lppedd.kotlinx.charset.GenerateCharsetTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
@@ -11,7 +11,7 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
   commonDir = layout.buildDirectory.dir("generatedCharsetsCommon")
   nonJvmDir = layout.buildDirectory.dir("generatedCharsetsNonJvm")
   jvmDir = layout.buildDirectory.dir("generatedCharsetsJvm")
-  packageName = "com.github.lppedd.kotlinx.charset.ebcdic"
+  packageName = "com.lppedd.kotlinx.charset.ebcdic"
 
   // Latin 1 US/Canada
   sbcs("IBM037") {

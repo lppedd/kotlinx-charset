@@ -1,11 +1,11 @@
 <#-- @ftlvariable name="packageName" type="java.lang.String" -->
 <#-- @ftlvariable name="className" type="java.lang.String" -->
 <#-- @ftlvariable name="isCommon" type="java.lang.Boolean" -->
-<#-- @ftlvariable name="charset" type="com.github.lppedd.kotlinx.charset.GenerateCharsetTask.ExtendedEbcdicDbcsCharset" -->
+<#-- @ftlvariable name="charset" type="com.lppedd.kotlinx.charset.GenerateCharsetTask.ExtendedEbcdicDbcsCharset" -->
 package ${packageName}
 
 @Suppress("ConstPropertyName", "JoinDeclarationAndAssignment")
-internal <#if isCommon == false>actual </#if>object ${className} : com.github.lppedd.kotlinx.charset.XCharset {
+internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.kotlinx.charset.XCharset {
   private const val b2Min: Int = ${toHex(charset.b2Min, 4)}
   private const val b2Max: Int = ${toHex(charset.b2Max, 4)}
 
@@ -13,8 +13,8 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.github.lp
   private val b2c: Array<IntArray>
   private val c2b: CharArray
   private val c2bIndex: IntArray
-  private val b2cComposites: Array<out com.github.lppedd.kotlinx.charset.Entry>
-  private val c2bComposites: Array<out com.github.lppedd.kotlinx.charset.Entry>
+  private val b2cComposites: Array<out com.lppedd.kotlinx.charset.Entry>
+  private val c2bComposites: Array<out com.lppedd.kotlinx.charset.Entry>
 
   <#if isCommon == false>actual </#if>override val name: String =
     "${charset.name}"
@@ -22,11 +22,11 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.github.lp
   <#if isCommon == false>actual </#if>override val aliases: Array<String>
      get() = arrayOf(<#list charset.aliases as alias>"${alias}"<#sep>, </#list>)
 
-  <#if isCommon == false>actual </#if>override fun newDecoder(): com.github.lppedd.kotlinx.charset.XCharsetDecoder =
-    com.github.lppedd.kotlinx.charset.ExtendedEbcdicDbcsDecoder(b2Min, b2Max, b2cSB, b2c, b2cComposites)
+  <#if isCommon == false>actual </#if>override fun newDecoder(): com.lppedd.kotlinx.charset.XCharsetDecoder =
+    com.lppedd.kotlinx.charset.ExtendedEbcdicDbcsDecoder(b2Min, b2Max, b2cSB, b2c, b2cComposites)
 
-  <#if isCommon == false>actual </#if>override fun newEncoder(): com.github.lppedd.kotlinx.charset.XCharsetEncoder =
-    com.github.lppedd.kotlinx.charset.ExtendedEbcdicDbcsEncoder(c2b, c2bIndex, c2bComposites)
+  <#if isCommon == false>actual </#if>override fun newEncoder(): com.lppedd.kotlinx.charset.XCharsetEncoder =
+    com.lppedd.kotlinx.charset.ExtendedEbcdicDbcsEncoder(c2b, c2bIndex, c2bComposites)
 
   <#assign chunkSize = 40>
   <#list charset.b2c?chunk(chunkSize) as chunk>
@@ -44,7 +44,7 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.github.lp
     // b2c entries are sorted by byte sequence to work with binary search
     b2cComposites = arrayOf(
       <#list charset.b2cComposites as entry>
-      com.github.lppedd.kotlinx.charset.Entry(${toHex(entry.bs, -1)}, '${toUnicode(entry.cp)}', '${toUnicode(entry.cp2)}'),
+      com.lppedd.kotlinx.charset.Entry(${toHex(entry.bs, -1)}, '${toUnicode(entry.cp)}', '${toUnicode(entry.cp2)}'),
       </#list>
     )
 
@@ -80,6 +80,6 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.github.lp
       <#list charset.c2bNR as v>${toHex(v, -1)}, <#if v?index != 0 && v?index < (charset.c2bNR?size - 1) && (v?index + 1) % 2 == 0>${"\n      "}</#if></#list>
     )
 
-    com.github.lppedd.kotlinx.charset.ExtendedDbcs.initC2B(b2cTemp, b2cSB.copyOf(), b2cNR, c2bNR, b2Min, b2Max, c2b, c2bIndex)
+    com.lppedd.kotlinx.charset.ExtendedDbcs.initC2B(b2cTemp, b2cSB.copyOf(), b2cNR, c2bNR, b2Min, b2Max, c2b, c2bIndex)
   }
 }

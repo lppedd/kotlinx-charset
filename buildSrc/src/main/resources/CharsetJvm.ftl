@@ -4,5 +4,5 @@
 package ${packageName}
 
 internal actual object ${className}
-  : com.github.lppedd.kotlinx.charset.JvmCharset(charset("${charsetName}")),
-    com.github.lppedd.kotlinx.charset.XCharset
+  : com.lppedd.kotlinx.charset.JvmCharset(charset("${charsetName}")),
+    com.lppedd.kotlinx.charset.XCharset

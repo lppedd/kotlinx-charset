@@ -9,5 +9,5 @@ dependencies {
 }
 
 application {
-  mainClass = "com.github.lppedd.kotlinx.charset.ucmcli.Main"
+  mainClass = "com.lppedd.kotlinx.charset.ucmcli.Main"
 }

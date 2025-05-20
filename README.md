@@ -3,6 +3,7 @@
 ![Build status](https://github.com/lppedd/kotlinx-charset/workflows/Build/badge.svg)
 ![MIT license](https://img.shields.io/github/license/lppedd/kotlinx-charset)
 ![Kotlin 2.1.20](https://img.shields.io/badge/kotlin-2.1.20-blue.svg?logo=kotlin)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lppedd.kotlinx-charset/core)](https://mvnrepository.com/artifact/com.lppedd.kotlinx-charset)
 
 Minimal charset support for Kotlin Multiplatform.
 
@@ -12,7 +13,19 @@ See [CHANGELOG.md](./CHANGELOG.md).
 
 ### Supported Kotlin platforms
 
-All Kotlin platforms are supported, except for Android.
+All Kotlin platforms are supported, except for Android Native.
+
+### Design considerations
+
+**kotlinx-charset** aims to be straightforward for existing JDK consumers.  
+It replicates parts of the JDK's `Charset` API, albeit with more restrictions.
+
+The core types you will work with are:
+
+- `XCharset` - describes a character set
+- `XCharsetDecoder` - decodes a byte sequence into characters
+- `XCharsetEncoder` - encodes characters into a byte sequence
+- `XCharsetRegistrar` - a registry and lookup service for obtaining `XCharset` instances
 
 ## core
 
@@ -27,7 +40,7 @@ private val registrar = XCharsetRegistrar()
 registrar.registerCharset(YourCharset())
 
 // Retrieve and use a charset
-val charset = registrar.getCharset("yourCharsetName")
+val charset = registrar.getCharset("YourCharsetName")
 val decoder = charset.newDecoder()
 val encoder = charset.newEncoder()
 ```

@@ -1,5 +1,10 @@
 # kotlinx-charset changelog
 
+## 0.1.1
+
+- Published modules to Maven Central.
+- Applied a small refactoring to `EbcdicDbcsEncoder`.
+
 ## 0.1.0
 
 - Added support for IBM1390 and IBM1399 character sets.

@@ -246,11 +246,11 @@ class IBM1390Test {
     // u0069 = 0F,71
     // u10FF = 6F         UNMAPPED
     // u011D = 0E,D6,D5
-    // u28BE = 6F         UNMAPPED
-    // u0000 = 0F,00
+    // u28BE = 0F,6F      UNMAPPED
+    // u0000 = 00
     // u008E = 0A
     // u31F7 = 0E,EC,8C
-    // u02A9 = 6F         UNMAPPED
-    assertEquals("0E,4A,88,0F,71,6F,0E,D6,D5,6F,0F,00,0A,0E,EC,8C,6F,0F", hex)
+    // u02A9 = 0F,6F      UNMAPPED
+    assertEquals("0E,4A,88,0F,71,6F,0E,D6,D5,0F,6F,00,0A,0E,EC,8C,0F,6F", hex)
   }
 }

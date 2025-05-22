@@ -179,6 +179,18 @@ internal class ExtendedEbcdicDbcsEncoder(
   private fun appendReplacementOrThrow(dst: ByteArray, dstIndex: Int, message: () -> String): Int {
     val repl = replacement ?: throw MessageCharacterCodingException(message())
     var i = dstIndex
+
+    when (mode) {
+      Ebcdic.DBCS -> if (repl.size == 1) {
+        dst[i++] = Ebcdic.SI.toByte()
+        mode = Ebcdic.SBCS
+      }
+      Ebcdic.SBCS -> if (repl.size > 1) {
+        dst[i++] = Ebcdic.SO.toByte()
+        mode = Ebcdic.DBCS
+      }
+    }
+
     dst[i++] = repl[0]
 
     if (repl.size > 1) {

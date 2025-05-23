@@ -1,5 +1,12 @@
 # kotlinx-charset changelog
 
+## 0.1.2
+
+- Added support for retrieving all registered charset instances.
+- Corrected EBCDIC double byte charset encoding behavior for unmappable code points.  
+  JDK delegation on the JVM has been removed to avoid its incorrect behavior.
+- Applied minor code refactorings.
+
 ## 0.1.1
 
 - Published modules to Maven Central.

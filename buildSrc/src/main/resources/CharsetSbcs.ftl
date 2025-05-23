@@ -21,6 +21,9 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
   <#if isCommon == false>actual </#if>override fun newEncoder(): com.lppedd.kotlinx.charset.XCharsetEncoder =
     com.lppedd.kotlinx.charset.SbcsEncoder(c2b, c2bIndex)
 
+  override fun toString(): String =
+    name
+
   init {
     val b2cStr = "${charset.b2cStr}"
     b2c = b2cStr.toCharArray()

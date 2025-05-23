@@ -28,6 +28,9 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
   <#if isCommon == false>actual </#if>override fun newEncoder(): com.lppedd.kotlinx.charset.XCharsetEncoder =
     com.lppedd.kotlinx.charset.ExtendedEbcdicDbcsEncoder(c2b, c2bIndex, c2bComposites)
 
+  override fun toString(): String =
+    name
+
   <#assign chunkSize = 40>
   <#list charset.b2c?chunk(chunkSize) as chunk>
   private fun initB2C${chunk?index}(b2c: Array<IntArray?>) {

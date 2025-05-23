@@ -25,4 +25,7 @@ public abstract class JvmCharset(private val jvmCharset: java.nio.charset.Charse
     encoder.onUnmappableCharacter(CodingErrorAction.REPLACE)
     return JvmEncoder(encoder)
   }
+
+  override fun toString(): String =
+    jvmCharset.toString()
 }

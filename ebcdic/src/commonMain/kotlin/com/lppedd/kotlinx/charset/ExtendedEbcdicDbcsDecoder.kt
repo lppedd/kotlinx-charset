@@ -126,7 +126,7 @@ internal class ExtendedEbcdicDbcsDecoder(
       return repl
     }
 
-    throw MessageCharacterCodingException(message)
+    throw EbcdicCharacterCodingException(message)
   }
 
   private fun findCompositeCharacters(bs: Int): CharArray? {

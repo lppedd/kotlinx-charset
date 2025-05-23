@@ -75,6 +75,6 @@ internal class SbcsEncoder(
       return repl
     }
 
-    throw MessageCharacterCodingException(message)
+    throw EbcdicCharacterCodingException(message)
   }
 }

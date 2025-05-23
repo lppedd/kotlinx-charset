@@ -50,6 +50,6 @@ internal class SbcsDecoder(private val b2c: CharArray) : XCharsetDecoder {
       return repl
     }
 
-    throw MessageCharacterCodingException(message)
+    throw EbcdicCharacterCodingException(message)
   }
 }

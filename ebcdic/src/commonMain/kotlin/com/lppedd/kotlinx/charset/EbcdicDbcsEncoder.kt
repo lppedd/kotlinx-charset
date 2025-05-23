@@ -82,7 +82,7 @@ internal class EbcdicDbcsEncoder(
   }
 
   private fun appendReplacementOrThrow(dst: ByteArray, dstIndex: Int, message: () -> String): Int {
-    val repl = replacement ?: throw MessageCharacterCodingException(message())
+    val repl = replacement ?: throw EbcdicCharacterCodingException(message())
     var i = dstIndex
 
     when (mode) {

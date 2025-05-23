@@ -103,6 +103,6 @@ internal class EbcdicDbcsDecoder(
       return repl
     }
 
-    throw MessageCharacterCodingException(message)
+    throw EbcdicCharacterCodingException(message)
   }
 }

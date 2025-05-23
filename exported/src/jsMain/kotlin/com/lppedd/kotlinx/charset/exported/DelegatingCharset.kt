@@ -17,4 +17,7 @@ internal class DelegatingCharset(private val delegate: CoreCharset) : XCharset {
 
   override fun newEncoder(): XCharsetEncoder =
     DelegatingCharsetEncoder(delegate.newEncoder())
+
+  override fun toString(): String =
+    delegate.toString()
 }

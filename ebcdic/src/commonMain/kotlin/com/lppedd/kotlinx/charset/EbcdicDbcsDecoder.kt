@@ -60,7 +60,7 @@ internal class EbcdicDbcsDecoder(
               // DBCS second byte is outside the allowed range
               if (b2 < b2Min || b2 > b2Max) {
                 val range = "${b2Min.toHex()}-${b2Max.toHex()}"
-                c = replOrThrow("The second byte is outside of the allowed range: $range")
+                c = replOrThrow("The second byte is outside the allowed range: $range")
               } else {
                 c = b2c[b1][b2 - b2Min]
 

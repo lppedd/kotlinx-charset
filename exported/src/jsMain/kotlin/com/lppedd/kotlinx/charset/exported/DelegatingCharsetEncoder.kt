@@ -18,7 +18,6 @@ internal class DelegatingCharsetEncoder(private val delegate: CoreCharsetEncoder
     delegate.reset()
   }
 
-  @JsExport.Ignore
   override fun toString(): String =
-    "(Exported) $delegate"
+    delegate.toString()
 }

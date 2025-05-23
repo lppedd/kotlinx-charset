@@ -140,13 +140,13 @@ internal class ExtendedEbcdicDbcsEncoder(
       if (c.isLowSurrogate()) {
         // There should have been a high surrogate character before this one
         dp = appendReplacementOrThrow(dst, dp) {
-          "The low surrogate code unit ${c.toHex()} is not preceded by an high surrogate code unit"
+          "The low surrogate code unit ${c.toHex()} is not preceded by a high surrogate code unit"
         }
 
         continue
       }
 
-      // No previous condition have applied, so the only choice
+      // No previous condition has applied, so the only choice
       // we have is to throw or use the replacement sequence
       dp = appendReplacementOrThrow(dst, dp) {
         "Character ${c.toHex()} is not mapped to a valid byte sequence"

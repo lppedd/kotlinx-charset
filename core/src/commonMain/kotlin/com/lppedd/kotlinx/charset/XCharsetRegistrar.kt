@@ -7,6 +7,12 @@ public class XCharsetRegistrar {
   private val map = HashMap<String, XCharset>(16)
 
   /**
+   * Returns all registered charset instances.
+   */
+  public fun getCharsets(): List<XCharset> =
+    map.values.distinct()
+
+  /**
    * Returns a charset instance for the named charset.
    *
    * @param charsetName The canonical name of the charset, or an alias

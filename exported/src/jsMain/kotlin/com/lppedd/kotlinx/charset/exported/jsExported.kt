@@ -10,6 +10,14 @@ import com.lppedd.kotlinx.charset.ebcdic.provideCharsets as provideEbcdicCharset
 private val registrar = initCharsetRegistrar()
 
 @JsExport
+public fun getCharsets(): Array<XCharset> {
+  val charsets = registrar.getCharsets()
+  return Array(charsets.size) {
+    DelegatingCharset(charsets[it])
+  }
+}
+
+@JsExport
 public fun getCharset(charsetName: String): XCharset {
   val delegate = registrar.getCharset(charsetName)
   return DelegatingCharset(delegate)

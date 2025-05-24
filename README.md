@@ -1,8 +1,8 @@
 # kotlinx-charset
 
-![Build status](https://github.com/lppedd/kotlinx-charset/workflows/Build/badge.svg)
-![MIT license](https://img.shields.io/github/license/lppedd/kotlinx-charset)
-![Kotlin 2.1.20](https://img.shields.io/badge/kotlin-2.1.20-blue.svg?logo=kotlin)
+[![Build status](https://github.com/lppedd/kotlinx-charset/workflows/Build/badge.svg)](https://github.com/lppedd/kotlinx-charset/actions/workflows/build.yml)
+[![MIT license](https://img.shields.io/github/license/lppedd/kotlinx-charset)](./LICENSE)
+[![Kotlin 2.1.20](https://img.shields.io/badge/kotlin-2.1.20-blue.svg?logo=kotlin)](https://kotlinlang.org)
 [![Maven Central](https://img.shields.io/maven-central/v/com.lppedd.kotlinx-charset/core)](https://mvnrepository.com/artifact/com.lppedd.kotlinx-charset)
 
 Minimal charset support for Kotlin Multiplatform.

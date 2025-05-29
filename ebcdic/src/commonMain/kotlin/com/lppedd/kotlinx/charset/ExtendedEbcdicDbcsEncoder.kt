@@ -3,11 +3,6 @@
 // SPDX-License-Identifier: MIT
 package com.lppedd.kotlinx.charset
 
-// Note: this encoder has been implemented to mimic what would be a
-//  JDK implementation behavior. The JDK EBCDIC DBCS implementations
-//  do not encode SI/SO before encoding the replacement byte sequence.
-//  There is currently an open question on whether this is right or not.
-
 /**
  * @author Edoardo Luppi
  */
@@ -33,7 +28,7 @@ internal class ExtendedEbcdicDbcsEncoder(
       r = a.cp2 - b.cp2
     }
 
-    r
+    return@Comparator r
   }
 
   // Stores the last found composite base character

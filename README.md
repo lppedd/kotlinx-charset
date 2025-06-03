@@ -4,6 +4,7 @@
 [![MIT license](https://img.shields.io/github/license/lppedd/kotlinx-charset)](./LICENSE)
 [![Kotlin 2.1.20](https://img.shields.io/badge/kotlin-2.1.20-blue.svg?logo=kotlin)](https://kotlinlang.org)
 [![Maven Central](https://img.shields.io/maven-central/v/com.lppedd.kotlinx-charset/core)](https://mvnrepository.com/artifact/com.lppedd.kotlinx-charset)
+[![NPM Version](https://img.shields.io/npm/v/%40lppedd%2Fkotlinx-charset)](https://www.npmjs.com/package/@lppedd/kotlinx-charset)
 
 Minimal charset support for Kotlin Multiplatform.
 

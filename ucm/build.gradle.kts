@@ -1,23 +1,8 @@
 import com.strumenta.antlrkotlin.gradle.AntlrKotlinTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
   id("kotlinx-charset-kmp")
   alias(libs.plugins.antlrKotlin)
-}
-
-kotlin {
-  sourceSets {
-    commonMain {
-      kotlin {
-        srcDir(layout.buildDirectory.dir("generatedAntlr"))
-      }
-
-      dependencies {
-        implementation(libs.antlrKotlin)
-      }
-    }
-  }
 }
 
 val generateKotlinGrammarSource = tasks.register<AntlrKotlinTask>("generateKotlinGrammarSource") {
@@ -43,6 +28,16 @@ val generateKotlinGrammarSource = tasks.register<AntlrKotlinTask>("generateKotli
   outputDirectory = layout.buildDirectory.dir(outDir).get().asFile
 }
 
-tasks.withType<KotlinCompilationTask<*>> {
-  dependsOn(generateKotlinGrammarSource)
+kotlin {
+  sourceSets {
+    commonMain {
+      kotlin {
+        srcDir(generateKotlinGrammarSource)
+      }
+
+      dependencies {
+        implementation(libs.antlrKotlin)
+      }
+    }
+  }
 }

@@ -41,3 +41,9 @@ kotlin {
     }
   }
 }
+
+tasks {
+  clean {
+    delete(generateKotlinGrammarSource)
+  }
+}

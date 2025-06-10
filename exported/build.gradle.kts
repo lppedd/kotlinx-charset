@@ -22,6 +22,13 @@ kotlin {
     binaries.library()
     generateTypeScriptDefinitions()
 
+    // Explicitly state the package contains ESM code
+    compilations.configureEach {
+      packageJson {
+        customField("type", "module")
+      }
+    }
+
     compilerOptions {
       target = "es2015"
       freeCompilerArgs.addAll(
@@ -88,12 +95,15 @@ npmPublish {
 
         repository {
           type = "git"
-          url = "https://github.com/lppedd/kotlinx-charset.git"
+          url = "git+https://github.com/lppedd/kotlinx-charset.git"
         }
 
         bugs {
           url = "https://github.com/lppedd/kotlinx-charset/issues"
         }
+
+        // Explicitly state the package contains ESM code
+        this["type"] = "module"
       }
 
       files {

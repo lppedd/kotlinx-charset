@@ -1,5 +1,9 @@
 # kotlinx-charset changelog
 
+## 0.1.3
+
+- Added a function to retrieve a charset without throwing an exception in case it is missing.
+
 ## 0.1.2
 
 - Added support for retrieving all registered charset instances.

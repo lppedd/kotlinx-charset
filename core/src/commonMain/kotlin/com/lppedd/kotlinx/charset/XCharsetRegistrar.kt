@@ -10,10 +10,14 @@ public class XCharsetRegistrar {
   private val map = HashMap<String, XCharset>(16)
 
   /**
-   * Returns all registered charset instances.
+   * Returns whether the registrar contains the named charset.
+   *
+   * @param charsetName The canonical name of the charset, or an alias
    */
-  public fun getCharsets(): List<XCharset> =
-    map.values.distinct()
+  public fun hasCharset(charsetName: String): Boolean {
+    val charset = map[charsetName.lowercase()]
+    return charset != null
+  }
 
   /**
    * Returns a charset instance for the named charset.
@@ -29,6 +33,12 @@ public class XCharsetRegistrar {
 
     throw IllegalArgumentException("Charset $charsetName could not be found")
   }
+
+  /**
+   * Returns all registered charset instances.
+   */
+  public fun getCharsets(): List<XCharset> =
+    map.values.distinct()
 
   /**
    * Registers a new charset implementation.

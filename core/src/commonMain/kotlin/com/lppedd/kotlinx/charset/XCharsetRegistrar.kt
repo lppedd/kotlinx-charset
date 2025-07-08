@@ -15,9 +15,8 @@ public class XCharsetRegistrar {
    *
    * @param charsetName The canonical name of the charset, or an alias
    */
-  public fun getCharsetOrNull(charsetName: String): XCharset? {
-    return map[charsetName.lowercase()]
-  }
+  public fun getCharsetOrNull(charsetName: String): XCharset? =
+    map[charsetName.lowercase()]
 
   /**
    * Returns a charset instance for the named charset.

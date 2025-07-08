@@ -10,13 +10,13 @@ public class XCharsetRegistrar {
   private val map = HashMap<String, XCharset>(16)
 
   /**
-   * Returns whether the registrar contains the named charset.
+   * Returns a charset instance for the named charset, or `null` if the
+   * registrar does not contain it.
    *
    * @param charsetName The canonical name of the charset, or an alias
    */
-  public fun hasCharset(charsetName: String): Boolean {
-    val charset = map[charsetName.lowercase()]
-    return charset != null
+  public fun getCharsetOrNull(charsetName: String): XCharset? {
+    return map[charsetName.lowercase()]
   }
 
   /**

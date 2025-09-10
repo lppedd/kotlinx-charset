@@ -117,11 +117,9 @@ tasks {
 }
 
 kotlin {
-  targets {
-    configureEach {
-      tasks.named(targetName + "SourcesJar").configure {
-        dependsOn(generateCharsets)
-      }
+  targets.configureEach {
+    tasks.named("${targetName}SourcesJar").configure {
+      dependsOn(generateCharsets)
     }
   }
 
@@ -148,7 +146,7 @@ kotlin {
       }
     }
 
-    named("nonJvmMain").configure {
+    nonJvmMain {
       kotlin {
         srcDir(layout.buildDirectory.dir("generatedCharsetsNonJvm"))
       }

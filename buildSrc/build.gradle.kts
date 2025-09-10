@@ -8,6 +8,6 @@ kotlin {
 
 dependencies {
   implementation(libs.kotlinGradlePlugin)
-  implementation(libs.mavenPublish)
+  implementation(libs.mavenPublishPlugin)
   implementation(libs.freemarker)
 }

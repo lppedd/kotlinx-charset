@@ -1,11 +1,11 @@
 [versions]
-kotlin = "2.1.20"
-kotlinxIO = "0.7.0"
+kotlin = "2.2.20"
+kotlinxIO = "0.8.0"
 clikt = "5.0.3"
 freemarker = "2.3.34"
-antlrKotlin = "1.0.2"
-mavenPublish = "0.31.0"
-npmPublish = "4.0.2"
+antlrKotlin = "1.0.5"
+mavenPublish = "0.34.0"
+npmPublish = "4.1.2"
 
 [libraries]
 kotlinxIO = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIO" }
@@ -15,7 +15,7 @@ antlrKotlin = { module = "com.strumenta:antlr-kotlin-runtime", version.ref = "an
 
 # Gradle plugins
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-mavenPublish = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "mavenPublish" }
+mavenPublishPlugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "mavenPublish" }
 
 [plugins]
 antlrKotlin = { id = "com.strumenta.antlr-kotlin", version.ref = "antlrKotlin" }

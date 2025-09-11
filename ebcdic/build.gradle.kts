@@ -117,16 +117,10 @@ tasks {
 }
 
 kotlin {
-  targets.configureEach {
-    tasks.named("${targetName}SourcesJar").configure {
-      dependsOn(generateCharsets)
-    }
-  }
-
   sourceSets {
     commonMain {
       kotlin {
-        srcDir(layout.buildDirectory.dir("generatedCharsetsCommon"))
+        srcDir(generateCharsets.get().commonDir)
       }
 
       dependencies {
@@ -142,13 +136,13 @@ kotlin {
 
     jvmMain {
       kotlin {
-        srcDir(layout.buildDirectory.dir("generatedCharsetsJvm"))
+        srcDir(generateCharsets.get().jvmDir)
       }
     }
 
     nonJvmMain {
       kotlin {
-        srcDir(layout.buildDirectory.dir("generatedCharsetsNonJvm"))
+        srcDir(generateCharsets.get().nonJvmDir)
       }
     }
   }

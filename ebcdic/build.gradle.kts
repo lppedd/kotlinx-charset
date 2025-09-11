@@ -120,7 +120,7 @@ kotlin {
   sourceSets {
     commonMain {
       kotlin {
-        srcDir(generateCharsets.get().commonDir)
+        srcDir(generateCharsets.flatMap { it.commonDir })
       }
 
       dependencies {
@@ -136,13 +136,13 @@ kotlin {
 
     jvmMain {
       kotlin {
-        srcDir(generateCharsets.get().jvmDir)
+        srcDir(generateCharsets.flatMap { it.jvmDir })
       }
     }
 
     nonJvmMain {
       kotlin {
-        srcDir(generateCharsets.get().nonJvmDir)
+        srcDir(generateCharsets.flatMap { it.nonJvmDir })
       }
     }
   }

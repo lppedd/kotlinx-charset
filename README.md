@@ -2,7 +2,7 @@
 
 [![Build status](https://github.com/lppedd/kotlinx-charset/workflows/Build/badge.svg)](https://github.com/lppedd/kotlinx-charset/actions/workflows/build.yml)
 [![MIT license](https://img.shields.io/github/license/lppedd/kotlinx-charset)](./LICENSE)
-[![Kotlin 2.1.20](https://img.shields.io/badge/kotlin-2.1.20-blue.svg?logo=kotlin)](https://kotlinlang.org)
+[![Kotlin 2.2.20](https://img.shields.io/badge/kotlin-2.2.20-blue.svg?logo=kotlin)](https://kotlinlang.org)
 [![Maven Central](https://img.shields.io/maven-central/v/com.lppedd.kotlinx-charset/core)](https://mvnrepository.com/artifact/com.lppedd.kotlinx-charset)
 [![NPM Version](https://img.shields.io/npm/v/%40lppedd%2Fkotlinx-charset)](https://www.npmjs.com/package/@lppedd/kotlinx-charset)
 
@@ -77,7 +77,7 @@ and encode strings, using top-level functions exported via ECMAScript modules.
 > [!TIP]
 > Avoid using this module when consuming `kotlinx-charset` from a Kotlin project
 
-You can depend on the [@lppedd/kotlinx-charset][1] npm package.  
+You can depend on the [@lppedd/kotlinx-charset][npm] npm package.  
 For example, consuming the library from TypeScript would look like:
 
 ```ts
@@ -105,4 +105,4 @@ Both the `decode` and `encode` functions will throw an `Error`
 if the specified charset does not exist or if an error occurs
 during data processing.
 
-[1]: https://www.npmjs.com/package/@lppedd/kotlinx-charset
+[npm]: https://www.npmjs.com/package/@lppedd/kotlinx-charset

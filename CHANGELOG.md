@@ -1,5 +1,10 @@
 # kotlinx-charset changelog
 
+## 0.1.4
+
+- Updated Kotlin to version 2.2.20.
+- Cleaned up build scripts.
+
 ## 0.1.3
 
 - Added a function to retrieve a charset without throwing an exception in case it is missing.

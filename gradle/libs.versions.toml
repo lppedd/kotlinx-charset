@@ -3,7 +3,7 @@ kotlin = "2.2.20"
 kotlinxIO = "0.8.0"
 clikt = "5.0.3"
 freemarker = "2.3.34"
-antlrKotlin = "1.0.5"
+antlrKotlin = "1.0.8"
 mavenPublish = "0.34.0"
 npmPublish = "4.1.2"
 

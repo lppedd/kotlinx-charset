@@ -1,12 +1,15 @@
-# kotlinx-charset
+<!--suppress HtmlDeprecatedAttribute -->
+<h1 align="center">kotlinx-charset</h1>
+<p align="center">Minimal charset support for Kotlin Multiplatform</p>
+<div align="center">
 
-[![Build status](https://github.com/lppedd/kotlinx-charset/workflows/Build/badge.svg)](https://github.com/lppedd/kotlinx-charset/actions/workflows/build.yml)
-[![MIT license](https://img.shields.io/github/license/lppedd/kotlinx-charset)](./LICENSE)
-[![Kotlin 2.2.20](https://img.shields.io/badge/kotlin-2.2.20-blue.svg?logo=kotlin)](https://kotlinlang.org)
-[![Maven Central](https://img.shields.io/maven-central/v/com.lppedd.kotlinx-charset/core)](https://mvnrepository.com/artifact/com.lppedd.kotlinx-charset)
-[![NPM Version](https://img.shields.io/npm/v/%40lppedd%2Fkotlinx-charset)](https://www.npmjs.com/package/@lppedd/kotlinx-charset)
+[![maven central](https://img.shields.io/maven-central/v/com.lppedd.kotlinx-charset/core)](https://mvnrepository.com/artifact/com.lppedd.kotlinx-charset)
+[![npm](https://img.shields.io/npm/v/%40lppedd%2Fkotlinx-charset?color=%23de1f1f&logo=npm)](https://www.npmjs.com/package/@lppedd/kotlinx-charset)
+[![kotlin](https://img.shields.io/badge/kotlin-2.2.20-blue.svg?logo=kotlin)](https://kotlinlang.org)
+[![build](https://img.shields.io/github/actions/workflow/status/lppedd/kotlinx-charset/build.yml.svg?branch=master)](https://github.com/lppedd/kotlinx-charset/actions/workflows/build.yml)
+[![license](https://img.shields.io/github/license/lppedd/kotlinx-charset?color=blue)](./LICENSE)
 
-Minimal charset support for Kotlin Multiplatform.
+</div>
 
 ### Changelog
 
@@ -51,10 +54,10 @@ val encoder = charset.newEncoder()
 The `ebcdic` module adds support for:
 
 ```text
-IBM037  IBM939   IBM1390
-IBM273  IBM1047  IBM1399
-IBM297  IBM1141
-IBM930  IBM1147
+IBM037  IBM930   IBM1143
+IBM273  IBM939   IBM1147
+IBM278  IBM1047  IBM1390
+IBM297  IBM1141  IBM1399
 ```
 
 You can register supported EBCDIC charsets to your `XCharsetRegistrar`

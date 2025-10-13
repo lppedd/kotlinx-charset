@@ -1,0 +1,33 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+
+env:
+  ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.PGP_KEY_ID }}
+  ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.PGP_SECRECT }}
+  ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.PGP_PASSWORD }}
+  ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.CENTRAL_USER }}
+  ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.CENTRAL_PASSWORD }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Grant execute permission to Gradle Wrapper
+        run: chmod +x gradlew
+      - name: Build modules
+        run: ./gradlew clean build
+      - name: Publish to Maven Central
+        run: ./gradlew publishToMavenCentral
+      - name: Publish to npm
+        run: ./gradlew :exported:publishJsPackageToNpmjsRegistry -Pnpm.publish.registry.npmjs.authToken=${{ secrets.NPM_TOKEN }}

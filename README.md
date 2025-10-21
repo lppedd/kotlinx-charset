@@ -74,10 +74,10 @@ provideEbcdicCharsets(registrar)
 
 ## exported
 
-The `exported` module allows JS (and soon WebAssembly) consumers to decode bytes
-and encode strings, using top-level functions exported via ECMAScript modules.
+The `exported` module allows JS consumers to decode bytes and encode strings,
+using top-level functions exported from ECMAScript modules.
 
-> [!TIP]
+> [!TIP]  
 > Avoid using this module when consuming `kotlinx-charset` from a Kotlin project
 
 You can depend on the [@lppedd/kotlinx-charset][npm] npm package.  

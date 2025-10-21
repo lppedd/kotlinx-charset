@@ -1,5 +1,9 @@
 # kotlinx-charset changelog
 
+## 0.1.6
+
+- Added support for the IBM937 character set.
+
 ## 0.1.5
 
 - Added support for the IBM278 and IBM1143 character sets.

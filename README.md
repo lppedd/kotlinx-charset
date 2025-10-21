@@ -54,10 +54,11 @@ val encoder = charset.newEncoder()
 The `ebcdic` module adds support for:
 
 ```text
-IBM037  IBM930   IBM1143
-IBM273  IBM939   IBM1147
-IBM278  IBM1047  IBM1390
-IBM297  IBM1141  IBM1399
+IBM037  IBM937   IBM1147
+IBM273  IBM939   IBM1390
+IBM278  IBM1047  IBM1399
+IBM297  IBM1141
+IBM930  IBM1143
 ```
 
 You can register supported EBCDIC charsets to your `XCharsetRegistrar`

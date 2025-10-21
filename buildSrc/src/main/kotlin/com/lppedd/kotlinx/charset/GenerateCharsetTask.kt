@@ -317,7 +317,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
       throw GradleException("The $charsetName.map file does not exist at: $mapFile")
     }
 
-    val entries = TreeSet(mapEntries)
+    val entries = TreeSet(mapEntries.asReversed())
 
     if (entries.size > 256) {
       throw GradleException("The SBCS b2c mappings must be 256 or less")
@@ -397,7 +397,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
       throw GradleException("The $charsetName.map file does not exist at: $mapFile")
     }
 
-    val entries = TreeSet(mapEntries)
+    val entries = TreeSet(mapEntries.asReversed())
     val sbUnicodeValues = MutableList(256) { UNMAPPABLE_DECODING }
     var hasSingleBytes = false
 

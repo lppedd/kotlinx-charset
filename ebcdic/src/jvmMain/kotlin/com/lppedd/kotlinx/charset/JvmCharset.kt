@@ -12,8 +12,9 @@ public abstract class JvmCharset(private val jvmCharset: java.nio.charset.Charse
   override val name: String =
     jvmCharset.name()
 
-  override val aliases: Array<String>
-    get() = jvmCharset.aliases().toTypedArray()
+  override val aliases: Array<String> by lazy(LazyThreadSafetyMode.PUBLICATION) {
+    jvmCharset.aliases().toTypedArray()
+  }
 
   override fun newDecoder(): XCharsetDecoder {
     val decoder = jvmCharset.newDecoder()

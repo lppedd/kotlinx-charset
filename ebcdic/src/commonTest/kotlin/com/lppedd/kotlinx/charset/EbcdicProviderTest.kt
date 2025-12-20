@@ -14,6 +14,6 @@ class EbcdicProviderTest {
     provideCharsets(registrar)
 
     val charsets = registrar.getCharsets()
-    assertEquals(13, charsets.size)
+    assertEquals(14, charsets.size)
   }
 }

@@ -7,7 +7,6 @@ import com.lppedd.kotlinx.charset.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalStdlibApi::class)
 abstract class B2CTest(
   private val charset: XCharset,
   private val b2cFile: String,

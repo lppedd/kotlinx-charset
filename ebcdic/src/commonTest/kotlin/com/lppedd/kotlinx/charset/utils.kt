@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 package com.lppedd.kotlinx.charset
 
-@OptIn(ExperimentalStdlibApi::class)
 private val decodeFormat = HexFormat {
   upperCase = true
   number {
@@ -12,7 +11,6 @@ private val decodeFormat = HexFormat {
   }
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 private val encodeFormat = HexFormat {
   upperCase = true
   bytes {
@@ -25,13 +23,11 @@ internal fun String.toHexString(): String {
   return chars.toHexString()
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 internal fun CharArray.toHexString(): String =
   this.joinToString(separator = ",") {
     it.code.toHexString(decodeFormat)
   }
 
-@OptIn(ExperimentalStdlibApi::class)
 internal fun ByteArray.toHexString(): String =
   this.toHexString(encodeFormat)
 
@@ -55,7 +51,6 @@ internal fun XCharset.decodeToString(bytes: ByteArray, replacement: String? = ""
   return decoder.decode(bytes)
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 internal fun XCharset.encodeToHexString(str: String, replacement: ByteArray? = byteArrayOf()): String {
   val bytes = this.encodeToBytes(str, replacement)
   return bytes.toHexString(encodeFormat)

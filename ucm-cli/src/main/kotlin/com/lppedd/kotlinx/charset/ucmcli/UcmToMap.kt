@@ -45,7 +45,6 @@ class UcmToMap : CliktCommand(name = "to-map") {
     c2bPath.writeText(c2bText)
   }
 
-  @OptIn(ExperimentalStdlibApi::class)
   private fun entryToString(entry: UcmMapping): String {
     val bsStr = "0x" + entry.bs.toHexString(bsPrintFormat)
     val csStr = entry.cs.joinToString(separator = "+", prefix = "U+") {

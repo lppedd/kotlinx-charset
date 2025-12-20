@@ -6,7 +6,6 @@ package com.lppedd.kotlinx.charset.ucm
 /**
  * @author Edoardo Luppi
  */
-@OptIn(ExperimentalStdlibApi::class)
 public class UcmMapping(
   public val bs: Int,
   public val cs: IntArray,

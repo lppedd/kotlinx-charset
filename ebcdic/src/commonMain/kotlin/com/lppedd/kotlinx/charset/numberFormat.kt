@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 package com.lppedd.kotlinx.charset
 
-@OptIn(ExperimentalStdlibApi::class)
 private val printFormat = HexFormat {
   upperCase = true
   number {
@@ -13,10 +12,8 @@ private val printFormat = HexFormat {
   }
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 internal fun Int.toHex(): String =
   this.toHexString(printFormat)
 
-@OptIn(ExperimentalStdlibApi::class)
 internal fun Char.toHex(): String =
   this.code.toHexString(printFormat)

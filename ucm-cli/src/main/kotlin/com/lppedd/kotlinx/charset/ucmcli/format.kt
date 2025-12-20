@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 package com.lppedd.kotlinx.charset.ucmcli
 
-@OptIn(ExperimentalStdlibApi::class)
 internal val bsPrintFormat = HexFormat {
   upperCase = true
   number {
@@ -12,7 +11,6 @@ internal val bsPrintFormat = HexFormat {
   }
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 internal val cpPrintFormat = HexFormat {
   upperCase = true
   number {

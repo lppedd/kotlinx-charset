@@ -1,5 +1,14 @@
 # kotlinx-charset changelog
 
+## 0.1.7
+
+- Added support for the Italian IBM280 and IBM1144 character sets.
+- Added support for the UK/Ireland IBM285 and IBM1146 character sets.
+- Fixed handling of the `0x4260` byte sequence with IBM930.  
+  See https://bugs.openjdk.org/browse/JDK-8368845.
+- Fixed aliases for IBM1147.
+- Updated Kotlin to version 2.2.21.
+
 ## 0.1.6
 
 - Added support for the IBM937 character set.

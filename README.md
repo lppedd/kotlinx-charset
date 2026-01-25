@@ -5,7 +5,7 @@
 
 [![maven central](https://img.shields.io/maven-central/v/com.lppedd.kotlinx-charset/core)](https://mvnrepository.com/artifact/com.lppedd.kotlinx-charset)
 [![npm](https://img.shields.io/npm/v/%40lppedd%2Fkotlinx-charset?color=%23de1f1f&logo=npm)](https://www.npmjs.com/package/@lppedd/kotlinx-charset)
-[![kotlin](https://img.shields.io/badge/kotlin-2.2.21-blue.svg?logo=kotlin)](https://kotlinlang.org)
+[![kotlin](https://img.shields.io/badge/kotlin-2.3.0-blue.svg?logo=kotlin)](https://kotlinlang.org)
 [![build](https://img.shields.io/github/actions/workflow/status/lppedd/kotlinx-charset/build.yml.svg?branch=master)](https://github.com/lppedd/kotlinx-charset/actions/workflows/build.yml)
 [![license](https://img.shields.io/github/license/lppedd/kotlinx-charset?color=F7F7F7)](./LICENSE)
 

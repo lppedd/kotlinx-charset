@@ -1,5 +1,9 @@
 # kotlinx-charset changelog
 
+## 0.1.8
+
+- Updated Kotlin to version 2.3.0.
+
 ## 0.1.7
 
 - Added support for the Italian IBM280 and IBM1144 character sets.

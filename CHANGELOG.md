@@ -1,5 +1,9 @@
 # kotlinx-charset changelog
 
+## 0.1.9
+
+- Added support for the Denmark/Norway IBM277 and IBM1142 character sets.
+
 ## 0.1.8
 
 - Updated Kotlin to version 2.3.0.

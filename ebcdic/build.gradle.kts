@@ -81,6 +81,22 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
     className = "IBM1141"
   }
 
+  // Latin 1 Denmark/Norway with Euro sign (like IBM277, but 0x5A = u00A4 -> u20AC)
+  sbcs("IBM01142") {
+    aliases = listOf(
+      "cp1142",
+      "ccsid01142",
+      "cp01142",
+      "1142",
+      "ebcdic-dk-277+euro",
+      "ebcdic-no-277+euro",
+      "ibm1142",
+      "ibm-1142"
+    )
+
+    className = "IBM1142"
+  }
+
   // Latin 1 Finland/Sweden with Euro sign (like IBM278, but 0x5A = u00A4 -> u20AC)
   sbcs("IBM01143") {
     aliases = listOf(

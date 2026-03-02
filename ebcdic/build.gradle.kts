@@ -50,6 +50,11 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
     aliases = listOf("cp273", "ibm-273", "273")
   }
 
+  // Latin 1 Denmark/Norway
+  sbcs("IBM277") {
+    aliases = listOf("cp277", "ibm-277", "277", "ebcdic-cp-dk", "ebcdic-cp-no", "csIBM277")
+  }
+
   // Latin 1 Finland/Sweden
   sbcs("IBM278") {
     aliases = listOf("cp278", "ibm-278", "278", "ebcdic-sv", "ebcdic-cp-se", "csIBM278")

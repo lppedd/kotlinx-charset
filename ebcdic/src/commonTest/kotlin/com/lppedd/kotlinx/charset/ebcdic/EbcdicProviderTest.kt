@@ -1,9 +1,9 @@
 // Copyright (c) 2026 Edoardo Luppi, licensed under the MIT License
 // SPDX-FileCopyrightText: 2026 Edoardo Luppi
 // SPDX-License-Identifier: MIT
-package com.lppedd.kotlinx.charset
+package com.lppedd.kotlinx.charset.ebcdic
 
-import com.lppedd.kotlinx.charset.ebcdic.provideCharsets
+import com.lppedd.kotlinx.charset.XCharsetRegistrar
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

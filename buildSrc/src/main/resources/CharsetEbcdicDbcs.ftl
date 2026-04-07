@@ -21,10 +21,10 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
      get() = arrayOf(<#list charset.aliases as alias>"${alias}"<#sep>, </#list>)
 
   <#if isCommon == false>actual </#if>override fun newDecoder(): com.lppedd.kotlinx.charset.XCharsetDecoder =
-    com.lppedd.kotlinx.charset.EbcdicDbcsDecoder(b2Min, b2Max, b2cSB, b2c)
+    com.lppedd.kotlinx.charset.ebcdic.EbcdicDbcsDecoder(b2Min, b2Max, b2cSB, b2c)
 
   <#if isCommon == false>actual </#if>override fun newEncoder(): com.lppedd.kotlinx.charset.XCharsetEncoder =
-    com.lppedd.kotlinx.charset.EbcdicDbcsEncoder(c2b, c2bIndex)
+    com.lppedd.kotlinx.charset.ebcdic.EbcdicDbcsEncoder(c2b, c2bIndex)
 
   override fun toString(): String =
     name
@@ -41,7 +41,7 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
 
     b2cSB = b2cSBStr.toCharArray()
 
-    val b2cUnmappable = CharArray(256) { com.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_DECODING }
+    val b2cUnmappable = CharArray(256) { com.lppedd.kotlinx.charset.ebcdic.CharsetMapping.UNMAPPABLE_DECODING }
     b2c = Array(b2cStr.size) {
       val str = b2cStr[it]
 
@@ -62,6 +62,6 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
     // Non-roundtrip .c2b entries
     val c2bNR = "${charset.c2bNR}"
 
-    com.lppedd.kotlinx.charset.Dbcs.initC2B(b2cStr, b2cSBStr, b2cNR, c2bNR, b2Min, b2Max, c2b, c2bIndex)
+    com.lppedd.kotlinx.charset.ebcdic.Dbcs.initC2B(b2cStr, b2cSBStr, b2cNR, c2bNR, b2Min, b2Max, c2b, c2bIndex)
   }
 }

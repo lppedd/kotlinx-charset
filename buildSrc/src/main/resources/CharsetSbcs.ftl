@@ -16,10 +16,10 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
      get() = arrayOf(<#list charset.aliases as alias>"${alias}"<#sep>, </#list>)
 
   <#if isCommon == false>actual </#if>override fun newDecoder(): com.lppedd.kotlinx.charset.XCharsetDecoder =
-    com.lppedd.kotlinx.charset.SbcsDecoder(b2c)
+    com.lppedd.kotlinx.charset.ebcdic.SbcsDecoder(b2c)
 
   <#if isCommon == false>actual </#if>override fun newEncoder(): com.lppedd.kotlinx.charset.XCharsetEncoder =
-    com.lppedd.kotlinx.charset.SbcsEncoder(c2b, c2bIndex)
+    com.lppedd.kotlinx.charset.ebcdic.SbcsEncoder(c2b, c2bIndex)
 
   override fun toString(): String =
     name
@@ -42,7 +42,7 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
 
     // Remove non-roundtrip .nr entries
     <#items as entry>
-    b2cMap[${toHex(entry.bs, 2)}] = com.lppedd.kotlinx.charset.CharsetMapping.UNMAPPABLE_DECODING
+    b2cMap[${toHex(entry.bs, 2)}] = com.lppedd.kotlinx.charset.ebcdic.CharsetMapping.UNMAPPABLE_DECODING
     </#items>
     </#list>
 
@@ -55,6 +55,6 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
     </#items>
     </#list>
 
-    com.lppedd.kotlinx.charset.Sbcs.initC2B(b2cMap, c2bNR, c2b, c2bIndex)
+    com.lppedd.kotlinx.charset.ebcdic.Sbcs.initC2B(b2cMap, c2bNR, c2b, c2bIndex)
   }
 }

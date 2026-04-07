@@ -1,73 +1,66 @@
 // Copyright (c) 2026 Edoardo Luppi, licensed under the MIT License
 // SPDX-FileCopyrightText: 2026 Edoardo Luppi
 // SPDX-License-Identifier: MIT
-package com.lppedd.kotlinx.charset
+package com.lppedd.kotlinx.charset.ebcdic
 
 /**
  * @author Edoardo Luppi
  */
-internal object Dbcs {
+internal object ExtendedDbcs {
   fun initC2B(
-    b2c: Array<String?>,
-    b2cSB: String,
-    b2cNR: String,
-    c2bNR: String,
+    b2c: Array<IntArray?>,
+    b2cSB: CharArray,
+    b2cNR: IntArray,
+    c2bNR: IntArray,
     b2Min: Int,
     b2Max: Int,
     c2b: CharArray,
-    c2bIndex: CharArray,
+    c2bIndex: IntArray,
   ) {
     // Reset the c2b table
     c2b.fill(CharsetMapping.UNMAPPABLE_ENCODING)
 
     // Leave room for a shared unmappable segment at c2bIndex index 0
     var offset = 256
-    val b2cCA = Array(b2c.size) {
-      val s = b2c[it]
-      s?.toCharArray()
-    }
 
-    val b2cSBCA = b2cSB.toCharArray()
-
-    // If any (non-empty string), apply the non-roundtrip .nr entries.
+    // If any, apply the non-roundtrip .nr entries.
     // b2cNR contains byte-char pairs that should not reverse-map
     // back to bytes, so we set UNMAPPABLE_DECODING to the appropriate
-    // indexes in b2cSBCA (single byte) and b2cCA (double byte).
+    // indexes in b2cSB (single byte) and b2c (double byte).
     var j = 0
-
-    while (j < b2cNR.length) {
-      val b = b2cNR[j++].code
+    while (j < b2cNR.size) {
+      val b = b2cNR[j++]
       val c = b2cNR[j++]
 
-      if (b < 256 && b2cSBCA.isNotEmpty()) {
-        if (b2cSBCA[b] == c) {
-          b2cSBCA[b] = CharsetMapping.UNMAPPABLE_DECODING
+      if (b <= 0xFF && b2cSB.isNotEmpty()) {
+        if (b2cSB[b] == c.toChar()) {
+          b2cSB[b] = CharsetMapping.UNMAPPABLE_DECODING
         }
       } else {
-        val chars = b2cCA[b shr 8]
+        val b2cRow = b2c[b shr 8]
         val i = (b and 0xFF) - b2Min
 
-        if (chars != null && chars[i] == c) {
-          chars[i] = CharsetMapping.UNMAPPABLE_DECODING
+        if (b2cRow != null && b2cRow[i] == c) {
+          b2cRow[i] = CharsetMapping.UNMAPPABLE_DECODING_INT
         }
       }
     }
 
-    // If present, process the single byte table.
-    // Here we map a Unicode character to its single byte value.
-    for (b in b2cSBCA.indices) {
-      val c = b2cSBCA[b].code
+    // Process the single byte table.
+    // Map a Unicode character to its single byte value.
+    for (b in b2cSB.indices) {
+      val c = b2cSB[b].code
 
       if (c == CharsetMapping.UNMAPPABLE_DECODING_INT) {
         continue
       }
 
-      var index = c2bIndex[c shr 8].code
+      var index = c2bIndex[c shr 8]
 
       if (index == 0) {
         index = offset
         offset += 256
-        c2bIndex[c shr 8] = index.toChar()
+        c2bIndex[c shr 8] = index
       }
 
       // index + (c and 0xFF) means:
@@ -77,23 +70,23 @@ internal object Dbcs {
     }
 
     // Process the double byte table.
-    // Here we map a Unicode character to its double byte value.
+    // Map a Unicode character to its double byte value.
     for (b1 in b2c.indices) {
-      val db = b2cCA[b1] ?: continue
+      val b2cRow = b2c[b1] ?: continue
 
       for (b2 in b2Min..b2Max) {
-        val c = db[b2 - b2Min].code
+        val c = b2cRow[b2 - b2Min]
 
         if (c == CharsetMapping.UNMAPPABLE_DECODING_INT) {
           continue
         }
 
-        var index = c2bIndex[c shr 8].code
+        var index = c2bIndex[c shr 8]
 
         if (index == 0) {
           index = offset
           offset += 256
-          c2bIndex[c shr 8] = index.toChar()
+          c2bIndex[c shr 8] = index
         }
 
         // index + (c and 0xFF) means:
@@ -111,18 +104,19 @@ internal object Dbcs {
     // If any (non-empty string), apply the non-roundtrip .c2b entries.
     // These are basically extra character to byte(s) mappings,
     // that do not appear in the byte(s) to character tables.
-    for (i in c2bNR.indices step 2) {
-      val b = c2bNR[i]
-      val c = c2bNR[i + 1].code
+    j = 0
+    while (j < c2bNR.size) {
+      val b = c2bNR[j++]
+      val c = c2bNR[j++]
       var index = (c shr 8)
 
-      if (c2bIndex[index].code == 0) {
-        c2bIndex[index] = offset.toChar()
+      if (c2bIndex[index] == 0) {
+        c2bIndex[index] = offset
         offset += 256
       }
 
-      index = c2bIndex[index].code + (c and 0xFF)
-      c2b[index] = b
+      index = c2bIndex[index] + (c and 0xFF)
+      c2b[index] = b.toChar()
     }
   }
 }

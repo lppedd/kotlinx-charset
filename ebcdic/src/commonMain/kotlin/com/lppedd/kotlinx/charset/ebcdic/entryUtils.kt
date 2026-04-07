@@ -1,7 +1,7 @@
 // Copyright (c) 2026 Edoardo Luppi, licensed under the MIT License
 // SPDX-FileCopyrightText: 2026 Edoardo Luppi
 // SPDX-License-Identifier: MIT
-package com.lppedd.kotlinx.charset
+package com.lppedd.kotlinx.charset.ebcdic
 
 internal fun Array<out Entry>.binarySearch(key: Entry, comp: Comparator<Entry>): Int {
   var low = 0

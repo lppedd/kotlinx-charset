@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: MIT
 package com.lppedd.kotlinx.charset.ebcdic
 
-import com.lppedd.kotlinx.charset.Ebcdic.SO
-import com.lppedd.kotlinx.charset.decodeToHexString
-import com.lppedd.kotlinx.charset.encodeToHexString
-import com.lppedd.kotlinx.charset.toHexString
+import com.lppedd.kotlinx.charset.ebcdic.Ebcdic.SO
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith

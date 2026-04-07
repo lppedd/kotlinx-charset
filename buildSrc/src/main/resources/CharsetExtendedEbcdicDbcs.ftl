@@ -13,8 +13,8 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
   private val b2c: Array<IntArray>
   private val c2b: CharArray
   private val c2bIndex: IntArray
-  private val b2cComposites: Array<out com.lppedd.kotlinx.charset.Entry>
-  private val c2bComposites: Array<out com.lppedd.kotlinx.charset.Entry>
+  private val b2cComposites: Array<out com.lppedd.kotlinx.charset.ebcdic.Entry>
+  private val c2bComposites: Array<out com.lppedd.kotlinx.charset.ebcdic.Entry>
 
   <#if isCommon == false>actual </#if>override val name: String =
     "${charset.name}"
@@ -23,10 +23,10 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
      get() = arrayOf(<#list charset.aliases as alias>"${alias}"<#sep>, </#list>)
 
   <#if isCommon == false>actual </#if>override fun newDecoder(): com.lppedd.kotlinx.charset.XCharsetDecoder =
-    com.lppedd.kotlinx.charset.ExtendedEbcdicDbcsDecoder(b2Min, b2Max, b2cSB, b2c, b2cComposites)
+    com.lppedd.kotlinx.charset.ebcdic.ExtendedEbcdicDbcsDecoder(b2Min, b2Max, b2cSB, b2c, b2cComposites)
 
   <#if isCommon == false>actual </#if>override fun newEncoder(): com.lppedd.kotlinx.charset.XCharsetEncoder =
-    com.lppedd.kotlinx.charset.ExtendedEbcdicDbcsEncoder(c2b, c2bIndex, c2bComposites)
+    com.lppedd.kotlinx.charset.ebcdic.ExtendedEbcdicDbcsEncoder(c2b, c2bIndex, c2bComposites)
 
   override fun toString(): String =
     name
@@ -47,7 +47,7 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
     // b2c entries are sorted by byte sequence to work with binary search
     b2cComposites = arrayOf(
       <#list charset.b2cComposites as entry>
-      com.lppedd.kotlinx.charset.Entry(${toHex(entry.bs, -1)}, '${toUnicode(entry.cp)}', '${toUnicode(entry.cp2)}'),
+      com.lppedd.kotlinx.charset.ebcdic.Entry(${toHex(entry.bs, -1)}, '${toUnicode(entry.cp)}', '${toUnicode(entry.cp2)}'),
       </#list>
     )
 
@@ -83,6 +83,6 @@ internal <#if isCommon == false>actual </#if>object ${className} : com.lppedd.ko
       <#list charset.c2bNR as v>${toHex(v, -1)}, <#if v?index != 0 && v?index < (charset.c2bNR?size - 1) && (v?index + 1) % 2 == 0>${"\n      "}</#if></#list>
     )
 
-    com.lppedd.kotlinx.charset.ExtendedDbcs.initC2B(b2cTemp, b2cSB.copyOf(), b2cNR, c2bNR, b2Min, b2Max, c2b, c2bIndex)
+    com.lppedd.kotlinx.charset.ebcdic.ExtendedDbcs.initC2B(b2cTemp, b2cSB.copyOf(), b2cNR, c2bNR, b2Min, b2Max, c2b, c2bIndex)
   }
 }

@@ -57,7 +57,7 @@ internal class ExtendedEbcdicDbcsEncoder(
 
         if (mode == Ebcdic.SBCS) {
           mode = Ebcdic.DBCS
-          dst[dp++] = Ebcdic.SO.toByte()
+          dst[dp++] = Ebcdic.SO
         }
 
         // TODO: we always consider bs to be a double byte sequence, but what
@@ -82,7 +82,7 @@ internal class ExtendedEbcdicDbcsEncoder(
         // This is a single byte mapping
         if (mode == Ebcdic.DBCS) {
           mode = Ebcdic.SBCS
-          dst[dp++] = Ebcdic.SI.toByte()
+          dst[dp++] = Ebcdic.SI
         }
 
         dst[dp++] = bb.toByte()
@@ -93,7 +93,7 @@ internal class ExtendedEbcdicDbcsEncoder(
         // This is a double byte mapping
         if (mode == Ebcdic.SBCS) {
           mode = Ebcdic.DBCS
-          dst[dp++] = Ebcdic.SO.toByte()
+          dst[dp++] = Ebcdic.SO
         }
 
         dst[dp++] = (bb shr 8).toByte()
@@ -104,7 +104,7 @@ internal class ExtendedEbcdicDbcsEncoder(
       if (c.isHighSurrogate()) {
         if (mode == Ebcdic.SBCS) {
           mode = Ebcdic.DBCS
-          dst[dp++] = Ebcdic.SO.toByte()
+          dst[dp++] = Ebcdic.SO
         }
 
         // Check if this is a valid high-low surrogate pair
@@ -152,7 +152,7 @@ internal class ExtendedEbcdicDbcsEncoder(
     }
 
     if (mode == Ebcdic.DBCS) {
-      dst[dp++] = Ebcdic.SI.toByte()
+      dst[dp++] = Ebcdic.SI
     }
 
     return dst.copyOf(dp)
@@ -180,11 +180,11 @@ internal class ExtendedEbcdicDbcsEncoder(
 
     when (mode) {
       Ebcdic.DBCS -> if (repl.size == 1) {
-        dst[i++] = Ebcdic.SI.toByte()
+        dst[i++] = Ebcdic.SI
         mode = Ebcdic.SBCS
       }
       Ebcdic.SBCS -> if (repl.size > 1) {
-        dst[i++] = Ebcdic.SO.toByte()
+        dst[i++] = Ebcdic.SO
         mode = Ebcdic.DBCS
       }
     }

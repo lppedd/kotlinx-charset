@@ -26,7 +26,7 @@ class IBM930Test : B2CTest(IBM930, "IBM930.b2c") {
     var hex = IBM930.encodeToHexString("\uFF0D")
     assertEquals("0E,42,60,0F", hex)
 
-    hex = IBM930.decodeToHexString(byteArrayOf(SO.toByte(), 0x42.toByte(), 0x60.toByte()))
+    hex = IBM930.decodeToHexString(byteArrayOf(SO, 0x42.toByte(), 0x60.toByte()))
     assertEquals("\uFF0D".toHexString(), hex)
   }
 }

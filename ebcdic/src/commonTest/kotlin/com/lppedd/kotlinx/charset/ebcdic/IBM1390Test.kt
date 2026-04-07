@@ -28,7 +28,7 @@ class IBM1390Test {
 
   @Test
   fun decodeDoubleBytes() {
-    val bytes = byteArrayOf(SO.toByte(), 0xBA.toByte(), 0x60.toByte(), 0xCC.toByte(), 0x47.toByte())
+    val bytes = byteArrayOf(SO, 0xBA.toByte(), 0x60.toByte(), 0xCC.toByte(), 0x47.toByte())
     val hex = IBM1390.decodeToHexString(bytes)
     assertEquals("\u5427\u86B1".toHexString(), hex)
   }
@@ -36,31 +36,31 @@ class IBM1390Test {
   @Test
   fun decodeComposites() {
     val compositeByteSeq = arrayOf(
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB5.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB6.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB7.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB8.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xB9.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBA.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBB.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBC.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBD.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBE.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xBF.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC0.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC1.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC2.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC3.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC4.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC5.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC6.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC7.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC8.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xC9.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xCA.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xCB.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xCC.toByte()),
-      byteArrayOf(SO.toByte(), 0xEC.toByte(), 0xCD.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xB5.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xB6.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xB7.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xB8.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xB9.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xBA.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xBB.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xBC.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xBD.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xBE.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xBF.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC0.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC1.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC2.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC3.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC4.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC5.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC6.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC7.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC8.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xC9.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xCA.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xCB.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xCC.toByte()),
+      byteArrayOf(SO, 0xEC.toByte(), 0xCD.toByte()),
     )
 
     val compositeChars = arrayOf(
@@ -99,7 +99,7 @@ class IBM1390Test {
 
     // Test a couple of random composite byte sequences
     val bytes = byteArrayOf(
-      SO.toByte(),    // Start of double byte mode
+      SO,             // Start of double byte mode
       0xEC.toByte(),
       0xC4.toByte(),
       0xEC.toByte(),
@@ -115,7 +115,7 @@ class IBM1390Test {
     val bytes = byteArrayOf(
       0x2B.toByte(),  // Single bytes
       0xF4.toByte(),
-      SO.toByte(),    // Start of double bytes mode
+      SO,             // Start of double bytes mode
       0x4E.toByte(),
       0xA9.toByte(),
       0xB4.toByte(),
@@ -132,7 +132,7 @@ class IBM1390Test {
   fun decodeUnmapped() {
     val bytes = byteArrayOf(
       0x0C.toByte(),
-      SO.toByte(),    // Start of double bytes mode
+      SO,             // Start of double bytes mode
       0xFA.toByte(),  // 0xFAFD is unmapped
       0xFD.toByte(),
       0xCC.toByte(),

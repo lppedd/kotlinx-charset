@@ -31,13 +31,13 @@ internal class ExtendedEbcdicDbcsDecoder(
 
     while (i < size) {
       when (val b1 = bytes[i++].toInt() and 0xFF /* to unsigned */) {
-        Ebcdic.SO -> if (mode != Ebcdic.SBCS) {
+        Ebcdic.SO.toInt() -> if (mode != Ebcdic.SBCS) {
           val c = replOrThrow("Malformed input")
           sb.append(c)
         } else {
           mode = Ebcdic.DBCS
         }
-        Ebcdic.SI -> if (mode != Ebcdic.DBCS) {
+        Ebcdic.SI.toInt() -> if (mode != Ebcdic.DBCS) {
           val c = replOrThrow("Malformed input")
           sb.append(c)
         } else {

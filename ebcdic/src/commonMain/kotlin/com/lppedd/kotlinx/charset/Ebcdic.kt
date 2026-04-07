@@ -23,10 +23,10 @@ internal object Ebcdic {
   /**
    * Shift-Out (switch to DBCS mode).
    */
-  const val SO: Int = 0x0E
+  const val SO: Byte = 0x0E.toByte()
 
   /**
    * Shift-In (switch to SBCS mode).
    */
-  const val SI: Int = 0x0F
+  const val SI: Byte = 0x0F.toByte()
 }

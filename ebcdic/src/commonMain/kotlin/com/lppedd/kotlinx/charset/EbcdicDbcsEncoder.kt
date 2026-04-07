@@ -47,7 +47,7 @@ internal class EbcdicDbcsEncoder(
       if (bb > CharsetMapping.MAX_SINGLE_BYTE) {
         if (mode == Ebcdic.SBCS) {
           mode = Ebcdic.DBCS
-          dst[dp++] = Ebcdic.SO.toByte()
+          dst[dp++] = Ebcdic.SO
         }
 
         dst[dp++] = (bb shr 8).toByte()
@@ -55,7 +55,7 @@ internal class EbcdicDbcsEncoder(
       } else {
         if (mode == Ebcdic.DBCS) {
           mode = Ebcdic.SBCS
-          dst[dp++] = Ebcdic.SI.toByte()
+          dst[dp++] = Ebcdic.SI
         }
 
         dst[dp++] = bb.toByte()
@@ -63,7 +63,7 @@ internal class EbcdicDbcsEncoder(
     }
 
     if (mode == Ebcdic.DBCS) {
-      dst[dp++] = Ebcdic.SI.toByte()
+      dst[dp++] = Ebcdic.SI
     }
 
     return dst.copyOf(dp)
@@ -90,11 +90,11 @@ internal class EbcdicDbcsEncoder(
 
     when (mode) {
       Ebcdic.DBCS -> if (repl.size == 1) {
-        dst[i++] = Ebcdic.SI.toByte()
+        dst[i++] = Ebcdic.SI
         mode = Ebcdic.SBCS
       }
       Ebcdic.SBCS -> if (repl.size > 1) {
-        dst[i++] = Ebcdic.SO.toByte()
+        dst[i++] = Ebcdic.SO
         mode = Ebcdic.DBCS
       }
     }

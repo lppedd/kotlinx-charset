@@ -3,8 +3,6 @@
 // SPDX-License-Identifier: MIT
 package com.lppedd.kotlinx.charset.ebcdic
 
-import kotlin.jvm.JvmSynthetic
-
 // Note: an object which contains constants only is always inlined in K/JS,
 //  so the Ebcdic class acts purely as namespace
 
@@ -25,12 +23,10 @@ public object Ebcdic {
   /**
    * The SBCS mode identifier.
    */
-  @JvmSynthetic
   internal const val SBCS: Int = 0
 
   /**
    * The DBCS mode identifier.
    */
-  @JvmSynthetic
   internal const val DBCS: Int = 1
 }

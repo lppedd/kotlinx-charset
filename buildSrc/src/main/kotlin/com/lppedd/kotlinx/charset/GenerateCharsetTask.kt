@@ -3,7 +3,6 @@ package com.lppedd.kotlinx.charset
 import freemarker.template.Configuration
 import freemarker.template.SimpleNumber
 import freemarker.template.TemplateMethodModelEx
-import freemarker.template.Version
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.NonNullApi
@@ -25,7 +24,7 @@ abstract class GenerateCharsetTask : DefaultTask() {
     private const val UNMAPPABLE_DECODING = "\\uFFFD"
 
     private val wsRegex = Regex("\\s+")
-    private val freemarker = Configuration(Version("2.3.32")).also {
+    private val freemarker = Configuration(Configuration.VERSION_2_3_34).also {
       it.setClassForTemplateLoading(GenerateCharsetTask::class.java, "/")
       it.defaultEncoding = "UTF-8"
       it.numberFormat = "c"

@@ -1,5 +1,9 @@
 # kotlinx-charset changelog
 
+## 0.2.0
+
+- Expose the Shift-Out and Shift-In control characters via `Ebcdic.SO` and `Ebcdic.SI`.
+
 ## 0.1.9
 
 - Added support for the Denmark/Norway IBM277 and IBM1142 character sets.

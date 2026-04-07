@@ -13,6 +13,16 @@ import kotlin.jvm.JvmSynthetic
  */
 public object Ebcdic {
   /**
+   * Shift-Out (switch to DBCS mode).
+   */
+  public const val SO: Byte = 0x0E.toByte()
+
+  /**
+   * Shift-In (switch to SBCS mode).
+   */
+  public const val SI: Byte = 0x0F.toByte()
+
+  /**
    * The SBCS mode identifier.
    */
   @JvmSynthetic
@@ -23,14 +33,4 @@ public object Ebcdic {
    */
   @JvmSynthetic
   internal const val DBCS: Int = 1
-
-  /**
-   * Shift-Out (switch to DBCS mode).
-   */
-  public const val SO: Byte = 0x0E.toByte()
-
-  /**
-   * Shift-In (switch to SBCS mode).
-   */
-  public const val SI: Byte = 0x0F.toByte()
 }

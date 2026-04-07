@@ -8,28 +8,28 @@ import java.nio.charset.CodingErrorAction
 /**
  * @author Edoardo Luppi
  */
-public abstract class JvmCharset(private val jvmCharset: java.nio.charset.Charset) : XCharset {
+public abstract class JvmCharset(private val nioCharset: java.nio.charset.Charset) : XCharset {
   override val name: String =
-    jvmCharset.name()
+    nioCharset.name()
 
   override val aliases: Array<String> by lazy(LazyThreadSafetyMode.PUBLICATION) {
-    jvmCharset.aliases().toTypedArray()
+    nioCharset.aliases().toTypedArray()
   }
 
   override fun newDecoder(): XCharsetDecoder {
-    val decoder = jvmCharset.newDecoder()
+    val decoder = nioCharset.newDecoder()
     decoder.onMalformedInput(CodingErrorAction.REPLACE)
     decoder.onUnmappableCharacter(CodingErrorAction.REPLACE)
     return JvmDecoder(decoder)
   }
 
   override fun newEncoder(): XCharsetEncoder {
-    val encoder = jvmCharset.newEncoder()
+    val encoder = nioCharset.newEncoder()
     encoder.onMalformedInput(CodingErrorAction.REPLACE)
     encoder.onUnmappableCharacter(CodingErrorAction.REPLACE)
     return JvmEncoder(encoder)
   }
 
   override fun toString(): String =
-    jvmCharset.toString()
+    "(JvmCharset) $nioCharset"
 }

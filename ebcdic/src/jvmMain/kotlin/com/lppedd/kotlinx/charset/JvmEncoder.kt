@@ -9,14 +9,14 @@ import java.nio.charset.CodingErrorAction
 /**
  * @author Edoardo Luppi
  */
-internal class JvmEncoder(private val nativeEncoder: java.nio.charset.CharsetEncoder) : XCharsetEncoder {
+internal class JvmEncoder(private val nioEncoder: java.nio.charset.CharsetEncoder) : XCharsetEncoder {
   override fun encode(value: String): ByteArray {
     if (value.isEmpty()) {
       return ByteArray(0)
     }
 
     val charBuffer = CharBuffer.wrap(value)
-    val byteBuffer = nativeEncoder.encode(charBuffer)
+    val byteBuffer = nioEncoder.encode(charBuffer)
     val byteArray = ByteArray(byteBuffer.remaining())
     byteBuffer.get(byteArray)
     return byteArray
@@ -24,16 +24,16 @@ internal class JvmEncoder(private val nativeEncoder: java.nio.charset.CharsetEnc
 
   override fun setReplacement(newReplacement: ByteArray?) {
     if (newReplacement != null) {
-      nativeEncoder.replaceWith(newReplacement)
-      nativeEncoder.onMalformedInput(CodingErrorAction.REPLACE)
-      nativeEncoder.onUnmappableCharacter(CodingErrorAction.REPLACE)
+      nioEncoder.replaceWith(newReplacement)
+      nioEncoder.onMalformedInput(CodingErrorAction.REPLACE)
+      nioEncoder.onUnmappableCharacter(CodingErrorAction.REPLACE)
     } else {
-      nativeEncoder.onMalformedInput(CodingErrorAction.REPORT)
-      nativeEncoder.onUnmappableCharacter(CodingErrorAction.REPORT)
+      nioEncoder.onMalformedInput(CodingErrorAction.REPORT)
+      nioEncoder.onUnmappableCharacter(CodingErrorAction.REPORT)
     }
   }
 
   override fun reset() {
-    nativeEncoder.reset()
+    nioEncoder.reset()
   }
 }

@@ -1,8 +1,8 @@
-# kotlinx-charset changelog
+# Changelog
 
 ## 0.2.0
 
-- Expose the Shift-Out and Shift-In control characters via `Ebcdic.SO` and `Ebcdic.SI`.
+- Exposed the Shift-Out and Shift-In control characters via the `Ebcdic.SO` and `Ebcdic.SI` constants.
 
 ## 0.1.9
 

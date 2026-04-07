@@ -113,9 +113,7 @@ during data processing.
 
 ## License
 
-[MIT License](./LICENSE)
-
-2025-present [Edoardo Luppi][lppedd]
+[MIT License](./LICENSE) 2025-present [Edoardo Luppi][lppedd]
 
 [npm]: https://www.npmjs.com/package/@lppedd/kotlinx-charset
 [lppedd]: https://github.com/lppedd

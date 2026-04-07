@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.3.0"
-kotlinxIO = "0.8.2"
+kotlinxIO = "0.9.0"
 clikt = "5.1.0"
 freemarker = "2.3.34"
 antlrKotlin = "1.0.9"

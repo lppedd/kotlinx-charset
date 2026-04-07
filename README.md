@@ -111,4 +111,11 @@ Both the `decode` and `encode` functions will throw an `Error`
 if the specified charset does not exist or if an error occurs
 during data processing.
 
+## License
+
+[MIT License](./LICENSE)
+
+2025-present [Edoardo Luppi][lppedd]
+
 [npm]: https://www.npmjs.com/package/@lppedd/kotlinx-charset
+[lppedd]: https://github.com/lppedd

@@ -173,7 +173,7 @@ val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
     aliases = listOf("cp1399", "ibm1399", "ibm-1399", "1399")
     className = "IBM1399"
 
-    // JDKs do not seem to offer built-in support for IBM1390
+    // JDKs do not seem to offer built-in support for IBM1399
     common = true
   }
 }

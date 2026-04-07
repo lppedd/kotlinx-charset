@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Applied minor cleanups to JVM NIO charset wrappers.
+
 ## 0.2.0
 
 - Exposed the Shift-Out and Shift-In control characters via the `Ebcdic.SO` and `Ebcdic.SI` constants.

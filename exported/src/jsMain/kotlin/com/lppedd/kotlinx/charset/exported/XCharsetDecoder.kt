@@ -3,8 +3,6 @@
 // SPDX-License-Identifier: MIT
 package com.lppedd.kotlinx.charset.exported
 
-import org.khronos.webgl.Uint8Array
-
 /**
  * @author Edoardo Luppi
  */

@@ -6,30 +6,8 @@ package com.lppedd.kotlinx.charset.exported
 import com.lppedd.kotlinx.charset.XCharsetRegistrar
 import com.lppedd.kotlinx.charset.ebcdic.provideCharsets as provideEbcdicCharsets
 
-@Suppress("DEPRECATION")
 @OptIn(ExperimentalStdlibApi::class)
-@EagerInitialization
 private val registrar = initCharsetRegistrar()
-
-@JsExport
-public fun getCharsetOrNull(charsetName: String): XCharset? {
-  val delegate = registrar.getCharsetOrNull(charsetName)
-  return if (delegate != null) DelegatingCharset(delegate) else null
-}
-
-@JsExport
-public fun getCharset(charsetName: String): XCharset {
-  val delegate = registrar.getCharset(charsetName)
-  return DelegatingCharset(delegate)
-}
-
-@JsExport
-public fun getCharsets(): Array<XCharset> {
-  val charsets = registrar.getCharsets()
-  return Array(charsets.size) {
-    DelegatingCharset(charsets[it])
-  }
-}
 
 @JsExport
 public fun decode(charsetName: String, bytes: Uint8Array): String {

@@ -32,18 +32,33 @@ public external interface EncodeOptions {
   public val replacement: Uint8Array?
 }
 
+/**
+ * Returns the charset with the specified [charsetName], or `null` if it is not available.
+ *
+ * @param charsetName The canonical name or alias of the charset
+ */
 @JsExport
 public fun getCharsetOrNull(charsetName: String): XCharset? {
   val delegate = registrar.getCharsetOrNull(charsetName)
   return if (delegate != null) DelegatingCharset(delegate) else null
 }
 
+/**
+ * Returns the charset for the specified [charsetName].
+ *
+ * Throws if the charset is not available.
+ *
+ * @param charsetName The canonical name or alias of the charset
+ */
 @JsExport
 public fun getCharset(charsetName: String): XCharset {
   val delegate = registrar.getCharset(charsetName)
   return DelegatingCharset(delegate)
 }
 
+/**
+ * Returns all available charset instances.
+ */
 @JsExport
 public fun getCharsets(): Array<XCharset> {
   val charsets = registrar.getCharsets()
@@ -52,6 +67,15 @@ public fun getCharsets(): Array<XCharset> {
   }
 }
 
+/**
+ * Decodes the specified [bytes] using the charset identified by [charsetName].
+ *
+ * Throws if the charset does not exist or decoding fails.
+ *
+ * @param charsetName The canonical name or alias of the charset to use
+ * @param bytes The byte sequence to decode
+ * @param options Optional decoding options
+ */
 @JsExport
 public fun decode(charsetName: String, bytes: Uint8Array, options: DecodeOptions? = null): String {
   val charset = registrar.getCharset(charsetName)
@@ -65,6 +89,15 @@ public fun decode(charsetName: String, bytes: Uint8Array, options: DecodeOptions
   return decoder.decode(byteArray)
 }
 
+/**
+ * Encodes the specified [value] using the charset identified by [charsetName].
+ *
+ * Throws if the charset does not exist or encoding fails.
+ *
+ * @param charsetName The canonical name or alias of the charset to use
+ * @param value The string to encode
+ * @param options Optional encoding options
+ */
 @JsExport
 public fun encode(charsetName: String, value: String, options: EncodeOptions? = null): Uint8Array {
   val charset = registrar.getCharset(charsetName)

@@ -10,12 +10,12 @@ package com.lppedd.kotlinx.charset
  */
 public interface XCharset {
   /**
-   * Returns the charset's canonical name.
+   * The charset's canonical name.
    */
   public val name: String
 
   /**
-   * Returns an array containing the charset's aliases.
+   * An array containing the charset's aliases.
    */
   public val aliases: Array<String>
 

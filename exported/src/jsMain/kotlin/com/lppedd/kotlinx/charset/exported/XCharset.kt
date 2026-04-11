@@ -8,8 +8,27 @@ package com.lppedd.kotlinx.charset.exported
  */
 @JsExport
 public interface XCharset {
+  /**
+   * The charset's canonical name.
+   */
   public val name: String
+
+  /**
+   * An array containing the charset's aliases.
+   */
   public val aliases: Array<String>
+
+  /**
+   * Returns a new decoder for this charset.
+   *
+   * It is **not** guaranteed the decoder is stateless.
+   */
   public fun newDecoder(): XCharsetDecoder
+
+  /**
+   * Returns a new encoder for this charset.
+   *
+   * It is **not** guaranteed the encoder is stateless.
+   */
   public fun newEncoder(): XCharsetEncoder
 }

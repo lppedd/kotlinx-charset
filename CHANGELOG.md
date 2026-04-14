@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+- Supported passing decoding and encoding options to the JS-exported `decode` and `encode` functions.
+
 ## 0.2.1
 
 - Applied minor cleanups to JVM NIO charset wrappers.

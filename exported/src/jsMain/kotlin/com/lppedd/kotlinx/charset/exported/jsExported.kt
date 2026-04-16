@@ -4,7 +4,6 @@
 package com.lppedd.kotlinx.charset.exported
 
 import com.lppedd.kotlinx.charset.XCharsetRegistrar
-import org.khronos.webgl.Uint8Array
 import com.lppedd.kotlinx.charset.ebcdic.provideCharsets as provideEbcdicCharsets
 
 @Suppress("DEPRECATION")

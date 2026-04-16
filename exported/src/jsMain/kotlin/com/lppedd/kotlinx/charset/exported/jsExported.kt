@@ -81,7 +81,7 @@ public fun decode(charsetName: String, bytes: Uint8Array, options: DecodeOptions
   val charset = registrar.getCharset(charsetName)
   val decoder = charset.newDecoder()
 
-  if (options != null && isNotUndefined(options, "replacement")) {
+  if (options != null && options.replacement !== undefined) {
     decoder.setReplacement(options.replacement)
   }
 
@@ -103,7 +103,7 @@ public fun encode(charsetName: String, value: String, options: EncodeOptions? = 
   val charset = registrar.getCharset(charsetName)
   val encoder = charset.newEncoder()
 
-  if (options != null && isNotUndefined(options, "replacement")) {
+  if (options != null && options.replacement !== undefined) {
     encoder.setReplacement(options.replacement?.toByteArray())
   }
 
@@ -116,6 +116,3 @@ private fun initCharsetRegistrar(): XCharsetRegistrar {
   provideEbcdicCharsets(registrar)
   return registrar
 }
-
-private fun isNotUndefined(@Suppress("unused") value: Any, @Suppress("unused") prop: String): Boolean =
-  js("typeof value[prop] !== 'undefined'")

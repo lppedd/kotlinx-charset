@@ -32,5 +32,7 @@ jobs:
         run: ./gradlew clean build
       - name: Publish to Maven Central
         run: ./gradlew publishToMavenCentral
-      - name: Publish to npm
-        run: ./gradlew :exported:publishJsPackageToNpmjsRegistry -Pnpm.publish.registry.npmjs.authToken=${{ secrets.NPM_TOKEN }}
+      # Temporarily disabled because of an issue with class property minimization.
+      # See https://youtrack.jetbrains.com/issue/KT-89449
+      # - name: Publish to npm
+      #   run: ./gradlew :exported:publishJsPackageToNpmjsRegistry -Pnpm.publish.registry.npmjs.authToken=${{ secrets.NPM_TOKEN }}

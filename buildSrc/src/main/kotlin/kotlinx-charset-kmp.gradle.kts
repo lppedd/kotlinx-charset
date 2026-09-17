@@ -49,32 +49,48 @@ kotlin {
     nodejs()
   }
 
+  //
   // Tier 1
-  macosX64()
+  //
+  // macOS host only
   macosArm64()
   iosSimulatorArm64()
-  iosX64()
   iosArm64()
 
+  //
   // Tier 2
+  //
   linuxX64()
   linuxArm64()
+
+  // macOS host only
   watchosSimulatorArm64()
-  watchosX64()
-  watchosArm32()
   watchosArm64()
   tvosSimulatorArm64()
-  tvosX64()
   tvosArm64()
 
+  //
   // Tier 3
+  //
   mingwX64()
+  androidNativeArm32()
+  androidNativeArm64()
+  androidNativeX86()
+  androidNativeX64()
+
+  // macOS host only
+  iosX64()
   watchosDeviceArm64()
 
-  // Deprecated.
-  // Should follow the same route as official Kotlin libraries
-  @Suppress("DEPRECATION")
-  linuxArm32Hfp()
+  //
+  // Deprecated - scheduled for removal
+  //
+  @Suppress("DEPRECATION") run {
+    watchosArm32()
+    macosX64()
+    watchosX64()
+    tvosX64()
+  }
 
   // Use a customized hierarchy to split JVM-specific declarations
   // from the rest of the supported platforms.

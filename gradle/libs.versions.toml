@@ -1,11 +1,11 @@
 [versions]
-kotlin = "2.3.0"
-kotlinxIO = "0.9.0"
+kotlin = "2.4.20"
+kotlinxIO = "0.9.1"
 clikt = "5.1.0"
 freemarker = "2.3.34"
-antlrKotlin = "1.0.9"
+antlrKotlin = "1.0.14"
 mavenPublish = "0.34.0"
-npmPublish = "4.1.9"
+npmPublish = "4.1.11"
 
 [libraries]
 kotlinxIO = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIO" }

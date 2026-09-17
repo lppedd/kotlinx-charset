@@ -4,11 +4,18 @@
 package com.lppedd.kotlinx.charset.exported
 
 internal actual fun Uint8Array.toByteArray(): ByteArray {
-  val i8a = Int8Array(this.buffer, this.byteOffset, this.length)
-  return i8a.unsafeCast<ByteArray>()
+  return ByteArray(this.length) {
+    this.get(it)
+  }
 }
 
 internal actual fun ByteArray.toUint8Array(): Uint8Array {
-  val i8a = this.unsafeCast<Int8Array>()
-  return Uint8Array(i8a.buffer, i8a.byteOffset, i8a.length)
+  val size = this.size
+  val array = Uint8Array(size)
+
+  for (i in 0..<size) {
+    array.set(i, this[i])
+  }
+
+  return array
 }

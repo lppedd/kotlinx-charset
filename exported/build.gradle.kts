@@ -1,5 +1,6 @@
 import com.lppedd.kotlinx.charset.setupPom
 import org.gradle.internal.os.OperatingSystem
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
   id("org.jetbrains.kotlin.multiplatform")
@@ -16,6 +17,10 @@ mavenPublishing {
 kotlin {
   // Mandate explicit visibility modifiers
   explicitApiWarning()
+
+  compilerOptions {
+    freeCompilerArgs.addAll("-Xexpect-actual-classes")
+  }
 
   js {
     nodejs()
@@ -38,6 +43,12 @@ kotlin {
         "-Xgenerate-polyfills=false",
       )
     }
+  }
+
+  @OptIn(ExperimentalWasmDsl::class)
+  wasmJs {
+    nodejs()
+    binaries.library()
   }
 
   sourceSets {

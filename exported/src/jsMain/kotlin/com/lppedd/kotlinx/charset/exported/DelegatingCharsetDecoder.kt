@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 package com.lppedd.kotlinx.charset.exported
 
-import org.khronos.webgl.Uint8Array
 import com.lppedd.kotlinx.charset.XCharsetDecoder as CoreCharsetDecoder
 
 /**

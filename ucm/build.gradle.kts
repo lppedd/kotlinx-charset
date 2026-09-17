@@ -6,6 +6,7 @@ plugins {
 }
 
 val generateKotlinGrammarSource = tasks.register<AntlrKotlinTask>("generateKotlinGrammarSource") {
+  description = "Generates the lexer and parser for the UCM grammar"
   dependsOn("cleanGenerateKotlinGrammarSource")
 
   // ANTLR .g4 files are under ucm/antlr

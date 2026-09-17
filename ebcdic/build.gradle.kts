@@ -14,6 +14,8 @@ mavenPublishing {
 }
 
 val generateCharsets = tasks.register<GenerateCharsetTask>("generateCharsets") {
+  description = "Generates all registered character sets"
+
   mappingsDir = layout.projectDirectory.dir("charsets")
   commonDir = layout.buildDirectory.dir("generatedCharsetsCommon")
   nonJvmDir = layout.buildDirectory.dir("generatedCharsetsNonJvm")

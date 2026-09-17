@@ -5,19 +5,19 @@ import freemarker.template.SimpleNumber
 import freemarker.template.TemplateMethodModelEx
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
-import org.gradle.api.NonNullApi
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
-import org.gradle.kotlin.dsl.container
+import org.gradle.kotlin.dsl.domainObjectContainer
 import org.gradle.work.NormalizeLineEndings
 import java.io.File
 import java.util.*
+import javax.annotation.Nonnull
 
 /**
  * @author Edoardo Luppi
  */
-@NonNullApi
+@Nonnull
 @CacheableTask
 abstract class GenerateCharsetTask : DefaultTask() {
   private companion object {
@@ -136,13 +136,13 @@ abstract class GenerateCharsetTask : DefaultTask() {
   )
 
   @get:Nested
-  protected val sbcs = project.container<CharsetOptions>()
+  protected val sbcs = project.objects.domainObjectContainer(CharsetOptions::class)
 
   @get:Nested
-  protected val ebcdicDbcs = project.container<EbcdicDbcsCharsetOptions>()
+  protected val ebcdicDbcs = project.objects.domainObjectContainer(EbcdicDbcsCharsetOptions::class)
 
   @get:Nested
-  protected val extendedEbcdicDbcs = project.container<ExtendedEbcdicDbcsCharsetOptions>()
+  protected val extendedEbcdicDbcs = project.objects.domainObjectContainer(ExtendedEbcdicDbcsCharsetOptions::class)
 
   /**
    * The directory where source `.map` files are localed.
@@ -249,7 +249,6 @@ abstract class GenerateCharsetTask : DefaultTask() {
         is ExtendedEbcdicDbcsCharsetOptions -> generateExtendedEbcdicDbcs(mappingsDir, outDir, options)
         is EbcdicDbcsCharsetOptions -> generateEbcdicDbcs(mappingsDir, outDir, options)
         is CharsetOptions -> generateSbcs(mappingsDir, outDir, options)
-        else -> error("Unknown options type")
       }
 
       classNames += "$packageName.$className"

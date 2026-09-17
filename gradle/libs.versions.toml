@@ -4,7 +4,7 @@ kotlinxIO = "0.9.1"
 clikt = "5.1.0"
 freemarker = "2.3.34"
 antlrKotlin = "1.0.14"
-mavenPublish = "0.34.0"
+mavenPublish = "0.37.0"
 npmPublish = "4.1.11"
 
 [libraries]

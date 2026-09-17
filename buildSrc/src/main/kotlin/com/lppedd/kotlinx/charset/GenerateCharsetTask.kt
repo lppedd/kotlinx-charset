@@ -8,7 +8,6 @@ import org.gradle.api.GradleException
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
-import org.gradle.kotlin.dsl.domainObjectContainer
 import org.gradle.work.NormalizeLineEndings
 import java.io.File
 import java.util.*
@@ -136,13 +135,13 @@ abstract class GenerateCharsetTask : DefaultTask() {
   )
 
   @get:Nested
-  protected val sbcs = project.objects.domainObjectContainer(CharsetOptions::class)
+  protected val sbcs = project.objects.domainObjectContainer(CharsetOptions::class.java)
 
   @get:Nested
-  protected val ebcdicDbcs = project.objects.domainObjectContainer(EbcdicDbcsCharsetOptions::class)
+  protected val ebcdicDbcs = project.objects.domainObjectContainer(EbcdicDbcsCharsetOptions::class.java)
 
   @get:Nested
-  protected val extendedEbcdicDbcs = project.objects.domainObjectContainer(ExtendedEbcdicDbcsCharsetOptions::class)
+  protected val extendedEbcdicDbcs = project.objects.domainObjectContainer(ExtendedEbcdicDbcsCharsetOptions::class.java)
 
   /**
    * The directory where source `.map` files are localed.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+- Updated Kotlin to version 2.4.20.
+
 ## 0.3.0
 
 - Supported passing decoding and encoding options to the JS-exported `decode` and `encode` functions.
